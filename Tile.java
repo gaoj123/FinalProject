@@ -39,14 +39,25 @@ public class Tile{
     public Tile(String a){
 	this.InitializeArrList();
 	letter=a;
-	int alphaPos=alphabetLetters.indexOf(a);
-	points=pointValues[alphaPos];
+	if(!(a.equals("?"))){
+	    int alphaPos=alphabetLetters.indexOf(a);
+	    points=pointValues[alphaPos];
+	}
+	else{
+	    points=0;
+	}
     }
     public String getLetter(){
 	return letter;
     }
-    public int getPoint(){
+    public int getPoints(){
 	return points;
+    }
+    public void setLetter(String x){
+	letter=x;
+    }
+    public void setPoints(int y){
+	points=y;
     }
     public static void main(String[] args){
 	Tile c=new Tile("B");
