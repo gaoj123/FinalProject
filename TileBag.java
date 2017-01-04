@@ -9,4 +9,13 @@ public class TileBag{
 	    a.add(aa);
 	}
     }
+    public drawTile(){
+	if(a.size()==0){
+	    System.out.println("Notification: There are no more tiles left in the bag");
+	}
+	else{
+	}		
+    }
+    public static void main(String[] args){
+    }
 }
