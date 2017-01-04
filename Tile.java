@@ -4,32 +4,6 @@ public class Tile{
     private int points;
     private static String[] alphabet=new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
     private static ArrayList<String> alphabetLetters=new ArrayList<String>();
-    //  alphabetLetters.add("A");
-    //  alphabetLetters.add("B");
-    //  alphabetLetters.add("C");
-    // alphabetLetters.add("D");
-    //  alphabetLetters.add("E");
-    //  alphabetLetters.add("F");
-    //   alphabetLetters.add("G");
-    //  alphabetLetters.add("H");
-    //  alphabetLetters.add("I");
-    //   alphabetLetters.add("J");
-    //  alphabetLetters.add("K");
-    //  alphabetLetters.add("L");
-    //   alphabetLetters.add("M");
-    //  alphabetLetters.add("N");
-    //  alphabetLetters.add("O");
-    //   alphabetLetters.add("P");
-    //  alphabetLetters.add("Q");
-    //  alphabetLetters.add("R");
-    //   alphabetLetters.add("S");
-    //  alphabetLetters.add("T");
-    //  alphabetLetters.add("U");
-    //   alphabetLetters.add("V");
-    //  alphabetLetters.add("W");
-    //  alphabetLetters.add("X");
-    //   alphabetLetters.add("Y");
-    //  alphabetLetters.add("Z");
     public void InitializeArrList(){
     	for(int i=0;i<26;i++){
     	    alphabetLetters.add(alphabet[i]);
