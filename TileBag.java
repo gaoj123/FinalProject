@@ -57,6 +57,22 @@ public class TileBag{
     // 	else{
     // 	}		
     // }
+    public void exchange(int numRequested, Player currentplayer, ArrayList<Tile> tilesToBeExchanged){
+	for(int start=0;start<lettersToBeExchanged.size();start++){
+	    a.add(tilesToBeExchanged.get(start));
+	    lettersToBeExchanged.remove(start);
+	}
+	if(a.size()>=7){
+	    for(int i=0;i<numRequested;i++){
+		Tile tileClaimed=a.get(i);
+		currentplayer.addToRack(tileClaimed);
+		//a.remove(z);
+	    }
+	}
+	else{
+	    System.out.println("Sorry.  You can't exchange tiles because there are less than 7 tiles left in the tile bag.");
+	}
+    }
     public static void main(String[] args){
 	TileBag test=new TileBag();
 	//System.out.println(test.a);
