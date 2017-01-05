@@ -13,4 +13,5 @@ public class BlankTile extends Tile{
 	System.out.println(a.getLetter());
 	System.out.println(a.getPoints());
     }
+    //FILE IS USELESS.  EVERYTHING SHOULD WORK WITH JUST TILE.JAVA FILE.
 }
