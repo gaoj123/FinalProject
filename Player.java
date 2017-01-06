@@ -12,9 +12,12 @@ public class Player{
 	rack.add(fromBag);
     }
     public String toString(){
+	String retStr="";
 	for(int i=0;i<rack.size();i++){
 	    Tile displayTile=rack.get(i);
-	    System.out.println(displayTile.getLetter());
+	   retStr=retStr+displayTile.getLetter()+" ";
+	}
+	return retStr;
     }
     public static void main(String[] args){
     }
