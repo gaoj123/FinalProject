@@ -1,8 +1,8 @@
 import java.util.*;
 public class TileBag{
-    private ArrayList<Tile> a=new ArrayList<Tile>();;
+    private ArrayList<Tile> a=new ArrayList<Tile>();
     private static String[] alphabet=new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","?"};
-    private static ArrayList<Integer> letterFrequency;;
+    private static ArrayList<Integer> letterFrequency;
     public TileBag(){
 	letterFrequency=new ArrayList<Integer>(Arrays.asList(9,2,2,4,12,2,3,2,9,1,1,4,2,6,8,2,1,6,4,6,4,2,2,1,2,1,2));
 	ArrayList<Integer> ints=new ArrayList<Integer>();
@@ -58,9 +58,9 @@ public class TileBag{
     // 	}		
     // }
     public void exchange(int numRequested, Player currentplayer, ArrayList<Tile> tilesToBeExchanged){
-	for(int start=0;start<lettersToBeExchanged.size();start++){
+	for(int start=0;start<tilesToBeExchanged.size();start++){
 	    a.add(tilesToBeExchanged.get(start));
-	    lettersToBeExchanged.remove(start);
+	    tilesToBeExchanged.remove(start);
 	}
 	if(a.size()>=7){
 	    for(int i=0;i<numRequested;i++){
