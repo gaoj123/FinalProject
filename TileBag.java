@@ -57,6 +57,9 @@ public class TileBag{
     // 	else{
     // 	}		
     // }
+    public void refillRack(Player currentplayer){
+	//int numTilesOnRack=;
+    }
     public void exchange(int numRequested, Player currentplayer, ArrayList<Tile> tilesToBeExchanged){
 	for(int start=0;start<tilesToBeExchanged.size();start++){
 	    a.add(tilesToBeExchanged.get(start));
