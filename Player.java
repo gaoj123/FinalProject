@@ -59,6 +59,7 @@ public class Player{
 			    }
 			    System.out.println("point for letter: "+pointForTile);
 			    totalPointValue+=pointForTile;
+			    removeFromRack(ofInterest);
 			    
     			}
 			System.out.println("total points: "+totalPointValue);
