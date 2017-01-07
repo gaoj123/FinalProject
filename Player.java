@@ -5,12 +5,16 @@ public class Player{
     int totalScore;
     int roundScore;
     boolean endTurn;
+    boolean tryAgain=false;
     public Player(String name){
 	this.name=name;
 	totalScore=0;
 	roundScore=0;
 	rack=new ArrayList<Tile>();
 	endTurn=false;
+    }
+    public boolean getEndTurn(){
+	return endTurn;
     }
     public void placeWord(Scrabble game, String word,int x,int y,String direction){
     	boolean haveTilesOrNotInRack=true;
@@ -77,7 +81,11 @@ public class Player{
 		    System.out.println("Cannot place word at position.  Position is off the board");
 		}
     		endTurn=true;
-    	    }
+	}
+	else{
+	    boolean tryAgain=true;
+	    boolean endTurn=false;
+	}
     }
     public Tile tileAtRackIndex(int indexx){
 	return rack.get(indexx);
