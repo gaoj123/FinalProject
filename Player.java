@@ -51,7 +51,12 @@ public class Player{
 				}
 			    }
     			    Tile ofInterest=rack.get(tileIndexInRack);
-    			    pointForTile=ofInterest.getPoints();
+			    if(ofInterest.getBlankOrNot()==true){
+				pointForTile=0;
+			    }
+			    else{
+				pointForTile=ofInterest.getPoints();
+			    }
 			    System.out.println("point for letter: "+pointForTile);
 			    totalPointValue+=pointForTile;
 			    
