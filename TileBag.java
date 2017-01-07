@@ -10,7 +10,9 @@ public class TileBag{
 	    ints.add(new Integer(i));
 	}
 	Collections.shuffle(ints);
-	System.out.println(ints);
+	System.out.println("Random Sequence of Ints from 0 to 99: "+"\n"+ints);
+	System.out.println("\n");
+	System.out.print("Sequence of randomly arranged tiles:"+"\n"+"[");
 	for(int start=0;start<100;start++){
 	    int z=0;
 	    z=ints.get(start);
@@ -37,45 +39,95 @@ public class TileBag{
 		}		    
 	    }
 	}
-		
-	// for(int j=0;j<100;j++){
-	//     int z=ints.get(j);
-	//     if(z>=0&&z<=8){
-	// 	Tile aa=new Tile("a");
-	// 	a.add(aa);
-	//     }
-	//     else if(z==9||z==10){
-	// 	Tile bb=new Tile("b");
-	// 	a.add(bb);
-	//     }
-	// }
+	System.out.println("]");
     }
-    // public drawTile(){
-    // 	if(a.size()==0){
-    // 	    System.out.println("Notification: There are no more tiles left in the bag");
-    // 	}
-    // 	else{
-    // 	}		
-    // }
-    public void exchange(int numRequested, Player currentplayer, ArrayList<Tile> tilesToBeExchanged){
-	for(int start=0;start<tilesToBeExchanged.size();start++){
-	    a.add(tilesToBeExchanged.get(start));
-	    tilesToBeExchanged.remove(start);
+    public void drawTile(Player currentplayer){
+	if(a.size()==0){
+	    System.out.println("The tile bag is empty, so no additional tiles were added to your rack");
 	}
-	if(a.size()>=7){
-	    for(int i=0;i<numRequested;i++){
-		Tile tileClaimed=a.get(i);
-		currentplayer.addToRack(tileClaimed);
-		//a.remove(z);
-	    }
+	int randomIndex= (int) (Math.random()*(a.size()-1));
+	System.out.println("random index: "+randomIndex);
+	currentplayer.addToRack(a.get(randomIndex));
+	a.remove(randomIndex);
+    }
+	
+    public void refillRack(Player currentplayer){
+	if(a.size()==0){
+	    System.out.println("The tile bag is empty, so no additional tiles were added to your rack");
 	}
 	else{
+	    int numTilesOnRack=currentplayer.getRackSize();
+	    if(numTilesOnRack==7){
+		System.out.println("No refills made because already have 7 tiles");
+	    }
+	    else if(numTilesOnRack<7){
+		int numTilesToAdd=7-numTilesOnRack;
+		for(int i=0;i<numTilesToAdd;i++){
+		    this.drawTile(currentplayer);
+		}
+	    }
+	}
+    }
+    public void exchange(Player currentplayer, ArrayList<Tile> tilesToBeExchanged){
+	if(a.size()<7){
 	    System.out.println("Sorry.  You can't exchange tiles because there are less than 7 tiles left in the tile bag.");
+	}
+	else{
+	    int numRequested=0;
+	    numRequested=tilesToBeExchanged.size();
+	    for(int start=0;start<numRequested;start++){
+		int indexToAddRandomlyBack= (int) (Math.random()*(a.size()-1));
+		Tile examining=tilesToBeExchanged.get(start);
+		a.add(indexToAddRandomlyBack, examining);
+		//	tilesToBeExchanged.remove(start);
+		currentplayer.removeFromRack(examining);
+	    }
+	    for(int i=0;i<numRequested;i++){
+		this.drawTile(currentplayer);
+		//Tile tileClaimed=a.get(0);
+		//currentplayer.addToRack(tileClaimed);
+		//a.remove(z);
+	    }
+	    // for(int j=0;j<numRequested;j++){
+	    // 	tilesToBeExchanged.remove(j);
+	    // }
 	}
     }
     public static void main(String[] args){
+	Player jen=new Player("Jenny");
 	TileBag test=new TileBag();
+	//test.refillRack(jen);
+	Tile f=new Tile("f");
+	Tile b=new Tile("b");
+	Tile c=new Tile("c");
+	Tile d=new Tile("d");
+	Tile e=new Tile("e");
+	Tile g=new Tile("g");
+	Tile h=new Tile("h");
+	jen.addToRack(f);
+	jen.addToRack(b);
+	jen.addToRack(c);
+	jen.addToRack(d);
+	jen.addToRack(e);
+	//jen.addToRack(g);
+	//jen.addToRack(h);
+	System.out.println(jen.getRackSize());
+	System.out.println(jen);
 	//System.out.println(test.a);
-	
-    }
+	// System.out.println(jen);
+	//ArrayList<Tile> testLettersToExchange=new ArrayList<Tile>();
+	// Tile c=new Tile("c");
+	// Tile d=new Tile("d");
+	// Tile e=new Tile("e");
+	//testLettersToExchange.add(g);
+	//testLettersToExchange.add(h);
+	// testLettersToExchange.add(c);
+	// testLettersToExchange.add(d);
+	// testLettersToExchange.add(e);
+	//System.out.println(jen);
+	//test.exchange(jen,testLettersToExchange);
+	test.refillRack(jen);
+	System.out.println(jen);
+
+}
 }

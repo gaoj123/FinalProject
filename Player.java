@@ -6,16 +6,26 @@ public class Player{
     int roundScore;
     public Player(String name){
 	this.name=name;
-
+	totalScore=0;
+	roundScore=0;
+	rack=new ArrayList<Tile>();
     }
     public void addToRack(Tile fromBag){
 	rack.add(fromBag);
     }
+    public void removeFromRack(Tile toRemove){
+	rack.remove(toRemove);
+    }
+    public int getRackSize(){
+	return rack.size();
+    }
     public String toString(){
-	String retStr="";
+	String retStr="Your tiles: ";
 	for(int i=0;i<rack.size();i++){
 	    Tile displayTile=rack.get(i);
-	   retStr=retStr+displayTile.getLetter()+" ";
+	    String letterCaps=displayTile.getLetter();
+	    letterCaps=letterCaps.toUpperCase();
+	   retStr=retStr+letterCaps+" ";
 	}
 	return retStr;
     }
