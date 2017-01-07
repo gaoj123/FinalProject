@@ -31,7 +31,20 @@ public class Scrabble{
     public static void main(String[] args){
 	Scrabble a=new Scrabble();
 	a.initializeArrayList();
-	System.out.println(a.dictWordList);
-	System.out.println(wordValidityCheck("hello"));
+	//System.out.println(a.dictWordList);
+	Tile b=new Tile("b");
+	Tile e=new Tile("e");
+	Tile d=new Tile("d");
+	TileBag tileBag=new TileBag();
+	Player jen=new Player("Jenny");
+	jen.addToRack(b);
+	jen.addToRack(e);
+	jen.addToRack(d);
+        System.out.println(jen);
+	tileBag.refillRack(jen);
+	System.out.println(jen);
+	//System.out.println(wordValidityCheck("bed"));
+        jen.placeWord(a,"bed",0,1,"v");
+	System.out.println(jen);
     }
 }
