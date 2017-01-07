@@ -35,16 +35,19 @@ public class Scrabble{
 	Tile b=new Tile("b");
 	Tile e=new Tile("e");
 	Tile d=new Tile("d");
+	Tile blank=new Tile();
+	blank.differentiate("a");
 	TileBag tileBag=new TileBag();
 	Player jen=new Player("Jenny");
 	jen.addToRack(b);
 	jen.addToRack(e);
 	jen.addToRack(d);
+	jen.addToRack(blank);
         System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	//System.out.println(wordValidityCheck("bed"));
-        jen.placeWord(a,"bed",0,1,"v");
+        jen.placeWord(a,"bead",0,13,"v");
 	System.out.println(jen);
     }
 }
