@@ -2,6 +2,7 @@ import java.util.*;
 public class Tile{
     private String letter;
     private int points;
+    private boolean blankOrNot=false;
     private static String[] alphabet=new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","?"};
     private static ArrayList<String> alphabetLetters=new ArrayList<String>();
     public void InitializeArrList(){
@@ -13,6 +14,7 @@ public class Tile{
     public Tile(){
 	points=0;
 	letter="";
+	blankOrNot=true;
     }
     public Tile(String tile){
 	this.InitializeArrList();
@@ -24,6 +26,9 @@ public class Tile{
 	else{
 	    points=0;
 	}
+    }
+    public boolean getBlankOrNot(){
+	return blankOrNot;
     }
     public void differentiate(String x){
 	setLetter(x.toUpperCase());
