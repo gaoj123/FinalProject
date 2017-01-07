@@ -35,6 +35,9 @@ public class Scrabble{
 	Tile b=new Tile("b");
 	Tile e=new Tile("e");
 	Tile d=new Tile("d");
+	Tile x=new Tile("x");
+	Tile y=new Tile("y");
+	Tile z=new Tile("z");
 	Tile blank=new Tile();
 	blank.differentiate("a");
 	TileBag tileBag=new TileBag();
@@ -42,12 +45,17 @@ public class Scrabble{
 	jen.addToRack(b);
 	jen.addToRack(e);
 	jen.addToRack(d);
+	jen.addToRack(x);
+	jen.addToRack(y);
+	jen.addToRack(z);
 	jen.addToRack(blank);
         System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	//System.out.println(wordValidityCheck("bed"));
-        jen.placeWord(a,"bead",0,13,"v");
+        jen.placeWord(a,"bd",0,13,"v");
+	System.out.println(jen);
+	tileBag.refillRack(jen);
 	System.out.println(jen);
     }
 }
