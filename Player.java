@@ -12,7 +12,41 @@ public class Player{
 	rack=new ArrayList<Tile>();
 	endTurn=false;
     }
-    public void placeWord(String word,int x,int y,String direction){
+    public void placeWord(Scrabble game, String word,int x,int y,String direction){
+	boolean haveTilesOrNotInRack=true;
+	for(int i=0;i<word.length();i++){
+	    int in=0;
+	    for(int j=0;j<7;j++){
+		if(word.substring(i,i+1).equals(rack.get(j))){
+		    in=1;
+		}
+		if(j==6&&in==0){
+		    haveTilesOrNotInRack=false;
+		}
+	    }
+	}
+	if (haveTilesOrNotInRack){
+		boolean validOrNot=game.wordValidityCheck(word);
+		int wordLength=word.length();
+		if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
+		    if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
+			int totalPointValue=0;
+			for(int p=0;p<wordLength;p++){
+			    int pointForTile=0;
+			    int tileIndexInRack=0;
+			    tileIndexInRack=rack.indexOf(word.substring(p,p+1));
+			    Tile ofInterest=rack.get(tileIndexInRack);
+			    pointForTile=ofInterest.getPoints();
+			    totalPointValue+=pointForTile;
+			}
+			//works, find pt value and lay out
+		    }
+		}
+		else{
+		    System.out.println("Invalid word.  Next player's turn.");
+		}
+		endTurn=true;
+	    }
     }
     public Tile tileAtRackIndex(int indexx){
 	return rack.get(indexx);
