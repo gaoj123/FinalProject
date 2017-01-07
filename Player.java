@@ -6,6 +6,7 @@ public class Player{
     int roundScore;
     boolean endTurn;
     boolean tryAgain=false;
+    int timesCanExchangeLeft=3;
     public Player(String name){
 	this.name=name;
 	totalScore=0;
@@ -102,7 +103,9 @@ public class Player{
     public int getRackSize(){
 	return rack.size();
     }
-    public void requestExchange(){
+    public void requestExchange(TileBag tilebag,int indexToExchange){
+	timesCanExchangeLeft-=1;
+	tilebag.exchange(this,indexToExchange);
 	roundScore=0;
 	endTurn=true;
     }
