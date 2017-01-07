@@ -104,10 +104,15 @@ public class Player{
 	return rack.size();
     }
     public void requestExchange(TileBag tilebag,int indexToExchange){
-	timesCanExchangeLeft-=1;
-	tilebag.exchange(this,indexToExchange);
-	roundScore=0;
-	endTurn=true;
+	if (timesCanExchangeLeft>0){
+	    tilebag.exchange(this,indexToExchange);
+	    timesCanExchangeLeft-=1;
+	    roundScore=0;
+	    endTurn=true;
+	}
+	else{
+	    System.out.println("You can only exchange three times.  You've already used up all those.");
+	}
     }
     public void pass(){
 	roundScore=0;
