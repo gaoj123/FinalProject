@@ -53,9 +53,10 @@ public class Scrabble{
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	//System.out.println(wordValidityCheck("bed"));
-        jen.placeWord(a,"bed",0,13,"v");
+        jen.placeWord(a,"bead",0,13,"v");
 	System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
+	System.out.println(jen.getEndTurn());
     }
 }
