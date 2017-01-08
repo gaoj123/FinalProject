@@ -26,6 +26,9 @@ public class Player{
     public int getRoundScore(){
 	return roundScore;
     }
+    public int getPointsOfTileInRack(int index){
+	return rack.get(index).getPoints();
+    }
     public void setTotalScore(int newTotal){
 	totalScore = newTotal;
     }
