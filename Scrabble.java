@@ -107,6 +107,14 @@ public class Scrabble{
 	overwriteScorekeeper(false);
     }
 
+    private static String welcomeInstructions(){
+	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>";
+    }
+
+    private static String instructions(){
+	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
+    }
+    
     //need the calculateScore method, but that depends on the words placed and intersections
 
     
@@ -149,8 +157,9 @@ public class Scrabble{
 	    a.endGameScoring();
 	    a.overwriteScorekeeper(true);
 	    System.out.println(a.scorekeeper);
+	    System.out.println(instructions());
 	}else if(args.length < 3){
-	    System.out.println("To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>");
+	    System.out.println(welcomeInstructions());
 	    
 	}
     }
