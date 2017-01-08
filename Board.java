@@ -22,10 +22,16 @@ public class Board{
 		xAxis += " " + col;
 	    }
 	}
+	int ycorMax = 14;
 	String fullBoard = rowDivide;
 	for(int row = 0; row < board.length; row++){
-	    fullBoard += "\n" + "|";
-	    //must place y-cor labels
+	    fullBoard += "\n";
+	    if(ycorMax - row < 10){
+		fullBoard += "0" + (ycorMax - row);
+	    }else{
+		fullBoard += (ycorMax - row);
+	    }
+	    fullBoard += "|";
 	    for(int col = 0; col < board[0].length; col++){
 		fullBoard += board[row][col] + "|";
 	    }
