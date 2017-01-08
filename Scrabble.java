@@ -60,7 +60,7 @@ public class Scrabble{
 	System.out.println(jen);
 	System.out.println(jen.getEndTurn());
 	System.out.println(testboard);
-	jen.placeWord(testboard,a,"ate",3,8,"h");
+	jen.placeWord(testboard,a,"ate",7,9,"v");
 	System.out.println(testboard);
     }
 }
