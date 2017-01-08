@@ -45,23 +45,20 @@ public class Player{
     		int wordLength=word.length();
     		if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
 		    	System.out.println("x and y between 0 and 14, so on board");
-
-			//additional check if square is not occupied (on all horizontal/vertical tiles that matter)
-			//if (){
-			//else{
-			//System.out.println("Cannot place word on position because some squares on the board are already occupied");
     		    if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
 			boolean onAnyOccupiedSquares=false;
 			if(direction.equals("v")){
 			    for(int rowCheck=0;rowCheck<word.length();rowCheck++){
-				if(board.squareOccupied(arrayrow+rowCheck,arraycol)==true){
+				Tile ofConcern=board.getTileOfSquare(arrayrow+rowCheck,arraycol);
+				if(board.squareOccupied(arrayrow+rowCheck,arraycol)==true&&word.substring(rowCheck,rowCheck+1).equals(ofConcern.getLetter())){
 				    onAnyOccupiedSquares=true;
 				}
 			    }
 			}
 			else if(direction.equals("h")){
 			    for(int colCheck=0;colCheck<word.length();colCheck++){
-				if(board.squareOccupied(arrayrow,arraycol+colCheck)==true){
+				Tile ofConcern=board.getTileOfSquare(arrayrow,arraycol+colCheck);
+				if(board.squareOccupied(arrayrow,arraycol+colCheck)==true&&word.substring(colCheck,colCheck+1).equals(ofConcern.getLetter())){
 				    onAnyOccupiedSquares=true;
 				}
 			    }
