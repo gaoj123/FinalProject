@@ -26,7 +26,7 @@ public class Tile{
 	}
     }
     public void differentiate(String x){
-	setLetter(x);
+	setLetter(x.toUpperCase());
     }
     public String getLetter(){
 	return letter;
@@ -35,7 +35,7 @@ public class Tile{
 	return points;
     }
     public void setLetter(String x){
-	letter=x;
+	letter=x.toUpperCase();
     }
     public void setPoints(int y){
 	points=y;
