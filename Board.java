@@ -1,7 +1,9 @@
 public class Board{
     private Square[][] board;
 
-    //methods for accessing and mutating board/Squares
+    public Square[][] getBoard(){
+	return board;
+    }
 
     public Board(){
 	board = new Square[15][15];
@@ -44,7 +46,9 @@ public class Board{
 			 col == q1 && row == midpt ||
 			 col == max && (row == q1 || row == q3) ||
 			 col == q3 + 1 && (row == midpt - 1 || row == midpt + 1) ||
-			 col == q3 && row == midpt){
+			 col == q3 && row == midpt ||
+			 row == midpt - 1 && (col == midpt - 1 || col == midpt + 1) ||
+			 row == midpt + 1 && (col == midpt - 1 || col == midpt + 1)){
 		    board[row][col] = new Square("double letter");
 		}else if(row == col ||
 			 row == max - col){
@@ -87,11 +91,18 @@ public class Board{
 	return fullBoard;
     }
 
+    //opt: make function to abbreviate/directly access and modify Squares
+    
 
     
     public static void main(String[] args){
 	Board scrabble = new Board();
+	System.out.println(scrabble.getBoard()[7][7].getTile());
+	Tile tile100 = new Tile("B");
+	scrabble.getBoard()[14][1].setTile(tile100);
+	Tile tile101 = new Tile("?");
+	scrabble.getBoard()[14][0].setTile(tile101);
+	scrabble.getBoard()[14][0].setEffect("regular");
 	System.out.println(scrabble);
-	
     }
 }
