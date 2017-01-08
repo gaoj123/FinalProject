@@ -13,8 +13,7 @@ public class Tile{
     private static int[] pointValues=new int[]{1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10,0};
     public Tile(){
 	points=0;
-	letter="";
-	blankOrNot=true;
+	letter=" ";
     }
     public Tile(String tile){
 	this.InitializeArrList();
@@ -25,6 +24,7 @@ public class Tile{
 	}
 	else{
 	    points=0;
+	    blankOrNot=true;
 	}
     }
     public boolean getBlankOrNot(){
@@ -51,13 +51,14 @@ public class Tile{
 	// //c.InitializeArrList();
 	// System.out.println(c.alphabetLetters);
 	// System.out.println(c.points);
-	// Tile d=new Tile("?");
-	// System.out.println(d.points);
-	// d.differentiate("a");
-	// System.out.println(d.getLetter());
-	// System.out.println(d.getPoints());
+	Tile d=new Tile("?");
+	 System.out.println(d.points);
+	d.differentiate("a");
+        System.out.println(d.getLetter());
+	 System.out.println(d.getPoints());
 	
-			
+	 Tile e=new Tile();
+	 
 			
     }
 				       
