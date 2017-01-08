@@ -45,7 +45,11 @@ public class Scrabble{
 	return spacesNeeded;
     }
 
-    private void overwriteScorekeeper(){
+    private void overwriteScorekeeper(boolean isLastOverwrite){
+	String lastColLabel = "Current Round";
+	if(isLastOverwrite){
+	    lastColLabel = "After Deductions";
+	}
 	scorekeeper = "Scoreboard";
 	String rowDivider = "\n+";
 	int maxNameLength = 6;
@@ -58,7 +62,7 @@ public class Scrabble{
 	    rowDivider += "-";
 	}
 	rowDivider += "+-----+----------------+";
-	scorekeeper += rowDivider + "\n|Player|Total|Current Round   |" + rowDivider;
+	scorekeeper += rowDivider + "\n|Player|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, 16) + "|" + rowDivider;
 	for(int player = 0; player < players.size(); player++){
 	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
 		"|" + players.get(player).getTotalScore() + extraSpacesNeeded(Integer.toString(players.get(player).getTotalScore()), 5) +
@@ -84,8 +88,6 @@ public class Scrabble{
 	}
     }
 
-    //private void lastOverWrite
-
     public Scrabble(String nameP1, String nameP2){
 	initializeArrayList();
 	players = new ArrayList<Player>(0);
@@ -102,7 +104,7 @@ public class Scrabble{
 	tileBag = new TileBag();
 	tileBag.refillRack(players.get(0));
 	tileBag.refillRack(players.get(1));
-	overwriteScorekeeper();
+	overwriteScorekeeper(false);
     }
 
     //need the calculateScore method, but that depends on the words placed and intersections
@@ -145,7 +147,7 @@ public class Scrabble{
 	    System.out.println(a.gameBoard);
 	    System.out.println(a.players);
 	    a.endGameScoring();
-	    a.overwriteScorekeeper();
+	    a.overwriteScorekeeper(true);
 	    System.out.println(a.scorekeeper);
 	}else if(args.length < 3){
 	    System.out.println("To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>");
