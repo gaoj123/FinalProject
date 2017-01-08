@@ -45,6 +45,28 @@ public class Scrabble{
 	return spacesNeeded;
     }
 
+    private void overwriteScorekeeper(){
+	scorekeeper = "Scoreboard";
+	String rowDivider = "\n+";
+	int maxNameLength = 6;
+	for(int player = 0; player < players.size(); player++){
+	    if(players.get(player).getName().length() > maxNameLength){
+		maxNameLength = players.get(player).getName().length();
+	    }
+	}
+	for(int i = 0; i < maxNameLength; i++){
+	    rowDivider += "-";
+	}
+	rowDivider += "+-----+----------------+";
+	scorekeeper += rowDivider + "\n|Player|Total|Current Round   |" + rowDivider;
+	for(int player = 0; player < players.size(); player++){
+	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
+		"|" + players.get(player).getTotalScore() + extraSpacesNeeded(Integer.toString(players.get(player).getTotalScore()), 5) +
+		"|" + players.get(player).getRoundScore() + extraSpacesNeeded(Integer.toString(players.get(player).getRoundScore()), 16) +
+		"|" + rowDivider;
+	}
+    }
+
     public Scrabble(String nameP1, String nameP2){
 	initializeArrayList();
 	players = new ArrayList<Player>(0);
@@ -61,24 +83,8 @@ public class Scrabble{
 	tileBag = new TileBag();
 	tileBag.refillRack(players.get(0));
 	tileBag.refillRack(players.get(1));
-	scorekeeper = "Scoreboard";
-	String rowDivider = "\n+";
-	int maxNameLength = 6;
-	for(int player = 0; player < players.size(); player++){
-	    if(players.get(player).getName().length() > maxNameLength){
-		maxNameLength = players.get(player).getName().length();
-	    }
-	}
-	for(int i = 0; i < maxNameLength; i++){
-	    rowDivider += "-";
-	}
-	rowDivider += "+-----+----------------+";
-	scorekeeper += rowDivider + "\n|Player|Total|Current Round   |" + rowDivider;
-	for(int player = 0; player < players.size(); player++){
-	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) + "|" + players.get(player).getTotalScore() + extraSpacesNeeded(Integer.toString(players.get(player).getTotalScore()), 5) + "|" + players.get(player).getRoundScore() + extraSpacesNeeded(Integer.toString(players.get(player).getRoundScore()), 16) + "|" + rowDivider;
-	}
+	overwriteScorekeeper();
     }
-    
 
 
     
