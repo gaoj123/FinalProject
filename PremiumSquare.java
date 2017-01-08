@@ -1,14 +1,9 @@
 public class PremiumSquare extends Square{
     private String effect;//"double word", "triple letter", etc.
-    private boolean status;
     private String color;//"red", "green", etc.
 
     public String getEffect(){
 	return effect;
-    }
-
-    public boolean getStatus(){
-	return status;
     }
 
     public String getColor(){
@@ -19,23 +14,20 @@ public class PremiumSquare extends Square{
 	effect = Effect;
     }
 
-    public void setStatus(boolean Status){
-	status = Status;
-    }
-
     public void setColor(String Color){
 	color = Color;
     }
 
-    public PremiumSquare(String Effect){
+    /*public PremiumSquare(String Effect){
+	super();
+	super.setIsPremium(true);
 	effect = Effect;
-	status = true;
 	if(Effect.equals("double letter")){
 	    
 	}else if(){
 
 	}
-    }
+	}*/
 
 
 
