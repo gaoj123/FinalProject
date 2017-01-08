@@ -2,6 +2,7 @@ import java.util.*;
 public class Tile{
     private String letter;
     private int points;
+    private boolean blankOrNot=false;
     private static String[] alphabet=new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","?"};
     private static ArrayList<String> alphabetLetters=new ArrayList<String>();
     public void InitializeArrList(){
@@ -23,7 +24,11 @@ public class Tile{
 	}
 	else{
 	    points=0;
+	    blankOrNot=true;
 	}
+    }
+    public boolean getBlankOrNot(){
+	return blankOrNot;
     }
     public void differentiate(String x){
 	setLetter(x.toUpperCase());
@@ -46,13 +51,14 @@ public class Tile{
 	// //c.InitializeArrList();
 	// System.out.println(c.alphabetLetters);
 	// System.out.println(c.points);
-	// Tile d=new Tile("?");
-	// System.out.println(d.points);
-	// d.differentiate("a");
-	// System.out.println(d.getLetter());
-	// System.out.println(d.getPoints());
+	Tile d=new Tile("?");
+	 System.out.println(d.points);
+	d.differentiate("a");
+        System.out.println(d.getLetter());
+	 System.out.println(d.getPoints());
 	
-			
+	 Tile e=new Tile();
+	 
 			
     }
 				       

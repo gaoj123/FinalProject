@@ -5,12 +5,17 @@ public class Player{
     int totalScore;
     int roundScore;
     boolean endTurn;
+    boolean tryAgain=false;
+    int timesCanExchangeLeft=3;
     public Player(String name){
 	this.name=name;
 	totalScore=0;
 	roundScore=0;
 	rack=new ArrayList<Tile>();
 	endTurn=false;
+    }
+    public boolean getEndTurn(){
+	return endTurn;
     }
     public void placeWord(Scrabble game, String word,int x,int y,String direction){
     	boolean haveTilesOrNotInRack=true;
@@ -51,9 +56,15 @@ public class Player{
 				}
 			    }
     			    Tile ofInterest=rack.get(tileIndexInRack);
-    			    pointForTile=ofInterest.getPoints();
+			    if(ofInterest.getBlankOrNot()==true){
+				pointForTile=0;
+			    }
+			    else{
+				pointForTile=ofInterest.getPoints();
+			    }
 			    System.out.println("point for letter: "+pointForTile);
 			    totalPointValue+=pointForTile;
+			    removeFromRack(ofInterest);
 			    
     			}
 			System.out.println("total points: "+totalPointValue);
@@ -71,7 +82,11 @@ public class Player{
 		    System.out.println("Cannot place word at position.  Position is off the board");
 		}
     		endTurn=true;
-    	    }
+	}
+	else{
+	    boolean tryAgain=true;
+	    boolean endTurn=false;
+	}
     }
     public Tile tileAtRackIndex(int indexx){
 	return rack.get(indexx);
@@ -88,9 +103,16 @@ public class Player{
     public int getRackSize(){
 	return rack.size();
     }
-    public void requestExchange(){
-	roundScore=0;
-	endTurn=true;
+    public void requestExchange(TileBag tilebag,int indexToExchange){
+	if (timesCanExchangeLeft>0){
+	    tilebag.exchange(this,indexToExchange);
+	    timesCanExchangeLeft-=1;
+	    roundScore=0;
+	    endTurn=true;
+	}
+	else{
+	    System.out.println("You can only exchange three times.  You've already used up all those.");
+	}
     }
     public void pass(){
 	roundScore=0;
