@@ -91,6 +91,22 @@ public class Board{
 	return fullBoard;
     }
 
+    public Tile getTileOfSquare(int row, int col){
+	return board[row][col].getTile();
+    }
+
+    public String getEffectOfSquare(int row, int col){
+	return board[row][col].getEffect();
+    }
+
+    public void setTileOfSquare(int row, int col, Tile newTile){
+	board[row][col].setTile(newTile);
+    }
+
+    public void setEffectOfSquare(int row, int col, String Effect){
+	board[row][col].setEffect(Effect);
+    }
+    
     //opt: make function to abbreviate/directly access and modify Squares
     
 
@@ -98,11 +114,15 @@ public class Board{
     public static void main(String[] args){
 	Board scrabble = new Board();
 	System.out.println(scrabble.getBoard()[7][7].getTile());
+	System.out.println(scrabble.getTileOfSquare(7, 7));
 	Tile tile100 = new Tile("B");
-	scrabble.getBoard()[14][1].setTile(tile100);
+	//scrabble.getBoard()[14][1].setTile(tile100);
+	scrabble.setTileOfSquare(14, 4, tile100);
 	Tile tile101 = new Tile("?");
-	scrabble.getBoard()[14][0].setTile(tile101);
-	scrabble.getBoard()[14][0].setEffect("regular");
+	//scrabble.getBoard()[14][0].setTile(tile101);
+	scrabble.setTileOfSquare(14, 0, tile101);
+	//scrabble.getBoard()[14][0].setEffect("regular");
+	scrabble.setEffectOfSquare(14, 0, "regular");
 	System.out.println(scrabble);
     }
 }
