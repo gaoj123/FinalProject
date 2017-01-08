@@ -99,6 +99,10 @@ public class Board{
 	return board[row][col].getEffect();
     }
 
+    public boolean squareOccupied(int row, int col){
+	return board[row][col].occupied();
+    }
+
     public void setTileOfSquare(int row, int col, Tile newTile){
 	board[row][col].setTile(newTile);
     }
@@ -124,5 +128,7 @@ public class Board{
 	//scrabble.getBoard()[14][0].setEffect("regular");
 	scrabble.setEffectOfSquare(14, 0, "regular");
 	System.out.println(scrabble);
+	System.out.println(scrabble.squareOccupied(14, 0));
+	System.out.println(scrabble.squareOccupied(0, 0));
     }
 }
