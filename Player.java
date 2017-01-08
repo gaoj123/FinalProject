@@ -5,7 +5,6 @@ public class Player{
     int totalScore;
     int roundScore;
     boolean endTurn;
-    boolean tryAgain=false;
     int timesCanExchangeLeft=3;
     public Player(String name){
 	this.name=name;
@@ -17,8 +16,12 @@ public class Player{
     public boolean getEndTurn(){
 	return endTurn;
     }
-    public void placeWord(Scrabble game, String word,int x,int y,String direction){
+    public void placeWord(Board board, Scrabble game, String word,int x,int y,String direction){
     	boolean haveTilesOrNotInRack=true;
+	int col=x;
+	int row=y;
+	int arrayrow=14-row;
+	int arraycol=col;
     	for(int i=0;i<word.length();i++){
     	    int in=0;
     	    for(int j=0;j<7;j++){
@@ -45,6 +48,22 @@ public class Player{
 			//else{
 			//System.out.println("Cannot place word on position because some squares on the board are already occupied");
     		    if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
+			boolean onAnyOccupiedSquares=false;
+			if(direction.equals("v")){
+			    for(int rowCheck=0;rowCheck<word.length();rowCheck++){
+				if(board.squareOccupied(arrayrow+rowCheck,arraycol)==true){
+				    onAnyOccupiedSquares=true;
+				}
+			    }
+			}
+			else if(direction.equals("h")){
+			    for(int colCheck=0;colCheck<word.length();colCheck++){
+				if(board.squareOccupied(arrayrow,arraycol+colCheck)==true){
+				    onAnyOccupiedSquares=true;
+				}
+			    }
+			}
+		        if(!onAnyOccupiedSquares){
     			int totalPointValue=0;
     			for(int p=0;p<wordLength;p++){
     			    int pointForTile=0;
@@ -62,30 +81,44 @@ public class Player{
 			    else{
 				pointForTile=ofInterest.getPoints();
 			    }
+			    if(direction.equals("h")){
+				board.setTileOfSquare(arrayrow,arraycol,ofInterest);
+				arraycol+=1;
+			    }
+			    else{
+				board.setTileOfSquare(arrayrow,arraycol,ofInterest);
+				arrayrow+=1;
+			    }
 			    System.out.println("point for letter: "+pointForTile);
 			    totalPointValue+=pointForTile;
 			    removeFromRack(ofInterest);
 			    
     			}
 			System.out.println("total points: "+totalPointValue);
-    			//works, find pt value and lay out
-    		    }
-		    else{
-			System.out.println("Position is on the board but cannot place word in position");
-			//also check if a tile is already there after Square.java written
+			endTurn=true;
+			}
+			else if(onAnyOccupiedSquares){
+			    System.out.println("When laid out, word will be on an occupied square (square already has a tile).  Please try again and choose an appropriate x-cor and y-cor and direction");
+			}
 		    }
-    		}
+		    else{
+			System.out.println("Position is on the board but cannot place word in position.  Please try again");
+			endTurn=false;
+		    
+		    }
+		}
     		else if(validOrNot==false){
     		    System.out.println("Invalid word.  Next player's turn.");
+		    endTurn=true;
     		}
 		else{
-		    System.out.println("Cannot place word at position.  Position is off the board");
+		    System.out.println("Position is off the board so cannot place word on board.  Please try again");
+		    endTurn=false;
 		}
-    		endTurn=true;
 	}
 	else{
-	    boolean tryAgain=true;
-	    boolean endTurn=false;
+	    System.out.println("Word contains letters not in your tile rack.  Please try again with only valid letters");
+	    endTurn=false;
 	}
     }
     public Tile tileAtRackIndex(int indexx){
