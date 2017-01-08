@@ -13,6 +13,9 @@ public class Cmd{
     public static String go(int x,int y){
         return ("\033[" + x + ";" + y + "H");
     }
+    public static String bgColor(int bgColor){
+        return ("\033[0;" + (bgColor + 10) + "m");
+    }
     public static String color(int textColor, int bgColor){
         return ("\033[0;" + textColor + ";" + (bgColor + 10) + "m");
     }
