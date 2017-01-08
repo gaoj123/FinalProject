@@ -21,6 +21,18 @@ public class Scrabble{
 	    System.exit(1);
 	}
     }
+    
+    public static boolean wordValidityCheck(String playersWord){
+	boolean status=false;
+	int listSize=dictWordList.size();
+	for(int i=0;i<listSize;i++){
+	    if(dictWordList.get(i).equals(playersWord.toUpperCase())){
+		status=true;
+	    }
+	    //System.out.println(word.toUpperCase());
+	}
+	return status;
+    }
 
     public Scrabble(String nameP1, String nameP2){
 	initializeArrayList();
@@ -40,23 +52,12 @@ public class Scrabble{
 	tileBag.refillRack(players.get(1));
     }
     
-    public static boolean wordValidityCheck(String playersWord){
-	boolean status=false;
-	int listSize=dictWordList.size();
-	for(int i=0;i<listSize;i++){
-	    if(dictWordList.get(i).equals(playersWord.toUpperCase())){
-		status=true;
-	    }
-	    //System.out.println(word.toUpperCase());
-	}
-	return status;
-    }
 
 
     
     public static void main(String[] args){
-	Scrabble a = new Scrabble("Jenn", "Winn");
-	/*a.initializeArrayList();
+	/*Scrabble a=new Scrabble();
+	a.initializeArrayList();
 	//System.out.println(a.dictWordList);
 	Tile b=new Tile("b");
 	Tile e=new Tile("e");
@@ -84,7 +85,14 @@ public class Scrabble{
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	System.out.println(jen.getEndTurn());*/
-	System.out.println(a.players);
-	System.out.println(a.gameBoard);
+	if(args.length == 3 && args[0].equals("default")){
+	    Scrabble a = new Scrabble("Jenn", "Winn");
+	    System.out.println(a.gameBoard);
+	    System.out.println(a.players);
+	    
+	}else if(args.length < 3){
+	    System.out.println("To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>");
+	    
+	}
     }
 }
