@@ -1,10 +1,7 @@
 public class Square{
     private Tile tile;
     private boolean isPremium;
-    private String effect; //"normal", "double word", "triple letter", etc.
-    //private int color; //refer to constants from Cmd.java
-
-    //will probably move color solely to toString area
+    private String effect; //"regular", "double word", "triple letter", etc.
 
     public Tile getTile(){
 	return tile;
@@ -18,35 +15,23 @@ public class Square{
 	return effect;
     }
 
-    //public int getColor(){
-    //return color;
-    //}
-
     public void setTile(Tile newTile){
 	tile = newTile;
     }
 
-    //public void setIsPremium(boolean premium){
-    //isPremium = premium;
-    //}
-
     public void setEffect(String Effect){
 	effect = Effect;
-	if(Effect.equals("normal")){
+	if(Effect.equals("regular")){
 	    isPremium = false;
 	}else{
 	    isPremium = true;
 	}
     }
 
-    //public void setColor(int Color){
-    //color = Color;
-    //}
-
     public Square(String Effect){
         tile = new Tile();
 	effect = Effect;
-	if(Effect.equals("normal")){
+	if(Effect.equals("regular")){
 	    isPremium = false;
 	}else{
 	    isPremium = true;
@@ -54,13 +39,23 @@ public class Square{
     }
 
     public String toString(){
-	return tile.getLetter() + " ";
+	int BGColor = Cmd.BLACK;
+	if(effect.equals("double letter")){
+	    BGColor = Cmd.BLUE;
+	}else if(effect.equals("triple letter")){
+	    BGColor = Cmd.GREEN;
+	}else if (effect.equals("double word")){
+	    BGColor = Cmd.RED;
+	}else if (effect.equals("triple word")){
+	    BGColor = Cmd.YELLOW;
+	}
+	return Cmd.bgColor(BGColor) + tile.getLetter() + " " + Cmd.bgColor(Cmd.BLACK);
     }
 
 
     
     public static void main(String[] args){
-	Square s00 = new Square("normal");
+	Square s00 = new Square("regular");
 	Square s10 = new Square("double word");
 	System.out.println("'" + s00 + "'");
 	System.out.println("'" + s10 + "'");
@@ -75,7 +70,7 @@ public class Square{
 	s10.setTile(tile1);
 	System.out.println("'" + s00 + "'");
 	System.out.println("'" + s10 + "'");
-	s10.setEffect("normal");
+	s10.setEffect("regular");
 	System.out.println(s10.getIsPremium());
 	System.out.println(s10.getEffect());
     }
