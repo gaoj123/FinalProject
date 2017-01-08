@@ -6,6 +6,7 @@ public class Scrabble{
     private ArrayList<Player> players;
     private Board gameBoard;
     private TileBag tileBag;
+    private String scorekeeper;
     
     public void initializeArrayList(){
 	try{
@@ -50,6 +51,18 @@ public class Scrabble{
 	tileBag = new TileBag();
 	tileBag.refillRack(players.get(0));
 	tileBag.refillRack(players.get(1));
+	scorekeeper = "Scoreboard";
+	String rowDivider = "+";
+	int maxNameLength = 6;
+	/*for(int player = 0; player < players.size(); player++){
+	    if(players.get(player).getName().length > maxNameLength){
+		maxNameLength = players.get(player).getName().length;
+	    }
+	    }*/
+	for(int i = 0; i < maxNameLength; i++){
+	    rowDivider += "-";
+	}
+	rowDivider += "+-----+----------------+";
     }
     
 
@@ -89,7 +102,7 @@ public class Scrabble{
 	    Scrabble a = new Scrabble("Jenn", "Winn");
 	    System.out.println(a.gameBoard);
 	    System.out.println(a.players);
-	    
+	    System.out.println(a.scorekeeper);
 	}else if(args.length < 3){
 	    System.out.println("To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>");
 	    
