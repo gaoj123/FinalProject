@@ -15,6 +15,13 @@ public class Square{
 	return effect;
     }
 
+    public boolean occupied(){
+	if(tile.getLetter().equals(" ")){
+	    return false;
+	}
+	return true;
+    }
+
     public void setTile(Tile newTile){
 	tile = newTile;
     }
