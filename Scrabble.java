@@ -3,6 +3,10 @@ import java.io.*; //file, filenotfoundexception
 
 public class Scrabble{
     public static ArrayList<String> dictWordList=new ArrayList<String>();
+    private ArrayList<Player> players;
+    private Board gameBoard;
+    private TileBag tileBag;
+    
     public void initializeArrayList(){
 	try{
 	    Scanner in = new Scanner(new File("WordList.txt"));
@@ -17,6 +21,25 @@ public class Scrabble{
 	    System.exit(1);
 	}
     }
+
+    public Scrabble(String nameP1, String nameP2){
+	initializeArrayList();
+	players = new ArrayList<Player>(0);
+	double P1Roll = Math.random();
+	double P2Roll = Math.random();
+	if(P1Roll < P2Roll){
+	    players.add(new Player(nameP1));
+	    players.add(new Player(nameP2));
+	}else{
+	    players.add(new Player(nameP2));
+	    players.add(new Player(nameP1));
+	}
+	gameBoard = new Board();
+	tileBag = new TileBag();
+	tileBag.refillRack(players.get(0));
+	tileBag.refillRack(players.get(1));
+    }
+    
     public static boolean wordValidityCheck(String playersWord){
 	boolean status=false;
 	int listSize=dictWordList.size();
@@ -28,9 +51,12 @@ public class Scrabble{
 	}
 	return status;
     }
+
+
+    
     public static void main(String[] args){
-	Scrabble a=new Scrabble();
-	a.initializeArrayList();
+	Scrabble a = new Scrabble("Jenn", "Winn");
+	/*a.initializeArrayList();
 	//System.out.println(a.dictWordList);
 	Tile b=new Tile("b");
 	Tile e=new Tile("e");
@@ -57,6 +83,8 @@ public class Scrabble{
 	System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
-	System.out.println(jen.getEndTurn());
+	System.out.println(jen.getEndTurn());*/
+	System.out.println(a.players);
+	System.out.println(a.gameBoard);
     }
 }
