@@ -1,34 +1,32 @@
 public class Square{
-    private String letter;
+    private Tile tile;
+    private boolean isPremium;
 
-    public String getLetter(){
-	return letter;
+    public Tile getTile(){
+	return tile;
     }
 
-    public void setLetter(String newLetter){
-	letter = newLetter;
+    public boolean getIsPremium(){
+	return isPremium;
     }
+
+    public void setTile(Tile newTile){
+	tile = newTile;
+    }
+
+    public void setIsPremium(boolean premium){
+	isPremium = premium;
+    }	
 
     public Square(){
-	letter = "";
-    }
-
-    public void placeTile(Tile tile){
-	letter = tile.getLetter();
+        tile = new Tile();
+	isPremium = false; 
     }
 
     public String toString(){
-	return letter + " ";
+	return tile.getLetter() + " ";
     }
 
     public static void main(String[] args){
-	Square s00 = new Square();
-	System.out.println("'" + s00.getLetter() + "'");
-	s00.setLetter("?");
-	System.out.println("'" + s00.getLetter() + "'");
-	Tile tileA = new Tile("A");
-	s00.placeTile(tileA);
-	System.out.println("'" + s00.getLetter() + "'");
-	System.out.println("'" + s00 + "'");
     }
 }
