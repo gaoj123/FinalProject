@@ -17,6 +17,10 @@ public class Player{
     public boolean getEndTurn(){
 	return endTurn;
     }
+    
+    public String getName(){
+	return name;
+    }
     public void placeWord(Scrabble game, String word,int x,int y,String direction){
     	boolean haveTilesOrNotInRack=true;
     	for(int i=0;i<word.length();i++){
