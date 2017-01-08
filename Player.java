@@ -26,6 +26,12 @@ public class Player{
     public int getRoundScore(){
 	return roundScore;
     }
+    public void setTotalScore(int newTotal){
+	totalScore = newTotal;
+    }
+    public void setRoundScore(int newRoundScore){
+	roundScore = newRoundScore;
+    }
     public void placeWord(Scrabble game, String word,int x,int y,String direction){
     	boolean haveTilesOrNotInRack=true;
     	for(int i=0;i<word.length();i++){
