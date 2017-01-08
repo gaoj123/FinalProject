@@ -29,15 +29,16 @@ public class Scrabble{
 	return status;
     }
     public static void main(String[] args){
+	Board testboard=new Board();
 	Scrabble a=new Scrabble();
 	a.initializeArrayList();
 	//System.out.println(a.dictWordList);
 	Tile b=new Tile("b");
 	Tile e=new Tile("e");
 	Tile d=new Tile("d");
-	Tile x=new Tile("x");
+	Tile t=new Tile("t");
 	Tile y=new Tile("y");
-	Tile z=new Tile("z");
+	Tile e2=new Tile("e");
 	Tile blank=new Tile();
 	blank.differentiate("a");
 	TileBag tileBag=new TileBag();
@@ -45,18 +46,21 @@ public class Scrabble{
 	jen.addToRack(b);
 	jen.addToRack(e);
 	jen.addToRack(d);
-	jen.addToRack(x);
+	jen.addToRack(t);
 	jen.addToRack(y);
-	jen.addToRack(z);
+	jen.addToRack(e2);
 	jen.addToRack(blank);
         System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	//System.out.println(wordValidityCheck("bed"));
-        jen.placeWord(a,"bead",0,13,"v");
+        jen.placeWord(testboard,a,"be",6,8,"h");
 	System.out.println(jen);
 	tileBag.refillRack(jen);
 	System.out.println(jen);
 	System.out.println(jen.getEndTurn());
+	System.out.println(testboard);
+	jen.placeWord(testboard,a,"ate",3,8,"h");
+	System.out.println(testboard);
     }
 }
