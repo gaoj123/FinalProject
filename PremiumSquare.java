@@ -1,12 +1,12 @@
 public class PremiumSquare extends Square{
-    private String effect;//"double word", "triple letter", etc.
-    private String color;//"red", "green", etc.
+    private String effect; //"double word", "triple letter", etc.
+    private int color; //refer to Cmd.java
 
     public String getEffect(){
 	return effect;
     }
 
-    public String getColor(){
+    public int getColor(){
 	return color;
     }
 
@@ -14,7 +14,7 @@ public class PremiumSquare extends Square{
 	effect = Effect;
     }
 
-    public void setColor(String Color){
+    public void setColor(int Color){
 	color = Color;
     }
 
@@ -27,7 +27,7 @@ public class PremiumSquare extends Square{
 	}else if(){
 
 	}
-	}*/
+    }*/
 
 
 
