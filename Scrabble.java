@@ -66,6 +66,25 @@ public class Scrabble{
 		"|" + rowDivider;
 	}
     }
+    
+    private void endRoundScoring(){
+	for(int player = 0; player < players.size(); player++){
+	    players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
+	    players.get(player).setRoundScore(0);
+	}
+    }
+
+    private void endGameScoring(){
+	endRoundScoring();
+	for(int player = 0; player < players.size(); player++){
+	    players.get(player).setRoundScore(players.get(player).getTotalScore());
+	    for(int tilesLeft = players.get(player).getRackSize() - 1; tilesLeft >= 0; tilesLeft--){
+		players.get(player).setRoundScore(players.get(player).getRoundScore() - players.get(player).getPointsOfTileInRack(tilesLeft));
+	    }
+	}
+    }
+
+    //private void lastOverWrite
 
     public Scrabble(String nameP1, String nameP2){
 	initializeArrayList();
@@ -86,6 +105,9 @@ public class Scrabble{
 	overwriteScorekeeper();
     }
 
+    //need the calculateScore method, but that depends on the words placed and intersections
+
+    
 
     
     public static void main(String[] args){
@@ -122,6 +144,8 @@ public class Scrabble{
 	    Scrabble a = new Scrabble("Jenn", "Winn");
 	    System.out.println(a.gameBoard);
 	    System.out.println(a.players);
+	    a.endGameScoring();
+	    a.overwriteScorekeeper();
 	    System.out.println(a.scorekeeper);
 	}else if(args.length < 3){
 	    System.out.println("To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>");
