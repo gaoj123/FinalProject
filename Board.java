@@ -9,7 +9,7 @@ public class Board{
 	board = new Square[15][15];
 	int max = board.length - 1;
 	int midpt = max / 2;
-	int q1 = Math.floorDiv(midpt, 2);
+	int q1 = midpt / 2;
 	int q3 = max - q1;
 	for(int row = 0; row < board.length; row++){
 	    for(int col = 0; col < board[0].length; col++){
