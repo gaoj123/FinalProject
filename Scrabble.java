@@ -114,7 +114,18 @@ public class Scrabble{
     private static String instructions(){
 	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
     }
+
+    private String rewriteGame(){
+	String game = " -- -- ";
+	return game;
+    }
+
+    private void overwriteGame(){
+	System.out.println(Cmd.CLEAR_SCREEN);
+    }
     
+    //should we include a chart of letter values on the bottom or top of the screen?
+
     //need the calculateScore method, but that depends on the words placed and intersections
 
     //need to add keyboard listener
@@ -162,6 +173,7 @@ public class Scrabble{
 	    a.overwriteScorekeeper(true);
 	    System.out.println(a.scorekeeper);
 	    System.out.println(instructions());
+	    a.overwriteGame();
 	}else if(args.length < 3){
 	    System.out.println(welcomeInstructions());
 	    
