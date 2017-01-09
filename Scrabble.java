@@ -112,7 +112,7 @@ public class Scrabble{
     }
 
     private static String instructions(){
-	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
+	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
     }
     
     //need the calculateScore method, but that depends on the words placed and intersections
