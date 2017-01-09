@@ -117,7 +117,11 @@ public class Scrabble{
     
     //need the calculateScore method, but that depends on the words placed and intersections
 
-    
+    //need to add keyboard listener
+
+    //need to add runGame method
+
+    //need to add endGame method
 
     
     public static void main(String[] args){
