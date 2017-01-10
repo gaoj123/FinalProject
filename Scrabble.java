@@ -7,6 +7,7 @@ public class Scrabble{
     private Board gameBoard;
     private TileBag tileBag;
     private String scorekeeper;
+    private ArrayList<Integer> totalRoundScores;
     
     public void initializeArrayList(){
 	try{
@@ -72,10 +73,13 @@ public class Scrabble{
     }
     
     private void endRoundScoring(){
+	int totalRoundScore = 0;
 	for(int player = 0; player < players.size(); player++){
+	    totalRoundScore += players.get(player).getRoundScore();
 	    players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
 	    players.get(player).setRoundScore(0);
 	}
+	totalRoundScores.add(Integer.valueOf(totalRoundScore));
     }
 
     private void endGameScoring(){
@@ -105,6 +109,7 @@ public class Scrabble{
 	tileBag.refillRack(players.get(0));
 	tileBag.refillRack(players.get(1));
 	overwriteScorekeeper(false);
+	totalRoundScores = new ArrayList<Integer>(0);
     }
 
     private static String welcomeInstructions(){
@@ -112,7 +117,7 @@ public class Scrabble{
     }
 
     private static String instructions(){
-	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
+	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
     }
 
     private String rewriteGame(Player currentPlayer){
@@ -137,11 +142,14 @@ public class Scrabble{
 		//calling the appropriate player method depending on input (placing the tile and dealing with premium effects will go here...or we can check at the end of a turn if the player placed tiles. it may also be better to do the scoring within the placing the tiles b/c those values are kept in player anyway.)
 		
 		
-		if(true){ //checks for endgame conditions (use boolean helper functs)
+		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ //checks for endgame conditions (use boolean helper functs)
 		    endGame(); //deals with the whole end-game sequence
 		}
 	    }
 	    endRoundScoring();
+	    if(round > 1 && totalRoundScores.get(round) + totalRoundScores.get(round - 1) + totalRoundScores.get(round - 2) == 0){
+		endGame();
+	    }
 	    round++;
 	}
     }
