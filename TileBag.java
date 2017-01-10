@@ -102,18 +102,21 @@ public class TileBag{
     // 	    // }
     // 	}
     // }
-       public void exchange(Player currentplayer, int input){
-	   if(a.size()<7){
-	       System.out.println("Sorry.  You can't exchange tiles because there are less than 7 tiles left in the tile bag.");
-	   }
-	   else{
-	       int indexToAddRandomlyBack= (int) (Math.random()*(a.size()-1));
-	       Tile examining=currentplayer.tileAtRackIndex(input-1);
-	       a.add(indexToAddRandomlyBack, examining);
-	       currentplayer.removeFromRack(examining);
-	       this.drawTile(input-1,currentplayer);
-	   }
-       } 
+    public void exchange(Player currentplayer, int input){
+	if(a.size()<7){
+	    System.out.println("Sorry.  You can't exchange tiles because there are less than 7 tiles left in the tile bag.");
+	}
+	else{
+	    int indexToAddRandomlyBack= (int) (Math.random()*(a.size()-1));
+	    Tile examining=currentplayer.tileAtRackIndex(input-1);
+	    a.add(indexToAddRandomlyBack, examining);
+	    currentplayer.removeFromRack(examining);
+	    this.drawTile(input-1,currentplayer);
+	}
+    }
+    public int getSize(){
+	return a.size();
+    }
     public static void main(String[] args){
 	Player jen=new Player("Jenny");
 	TileBag test=new TileBag();
