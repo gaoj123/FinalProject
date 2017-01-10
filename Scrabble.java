@@ -115,13 +115,15 @@ public class Scrabble{
 	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
     }
 
-    private String rewriteGame(){
-	String game = " -- -- ";
+    private String rewriteGame(Player currentPlayer){
+	String game = gameBoard + "\n" + scorekeeper + "\nCurrent Player: " + currentPlayer.getName() + "\n" + currentPlayer + instructions();
 	return game;
     }
 
-    private void overwriteGame(){
-	System.out.println(Cmd.CLEAR_SCREEN);
+    private void overwriteGame(Player currentPlayer){
+	System.out.println(Cmd.HIDE_CURSOR);
+	System.out.println(Cmd.go(1,1));
+	System.out.println(rewriteGame(currentPlayer));
     }
     
     //should we include a chart of letter values on the bottom or top of the screen?
@@ -166,14 +168,16 @@ public class Scrabble{
 	System.out.println(jen);
 	System.out.println(jen.getEndTurn());*/
 	if(args.length == 3 && args[0].equals("default")){
-	    Scrabble a = new Scrabble("Jenn", "Winn");
-	    System.out.println(a.gameBoard);
+	    Scrabble a = new Scrabble(args[1], args[2]);
+	    /*System.out.println(a.gameBoard);
 	    System.out.println(a.players);
 	    a.endGameScoring();
 	    a.overwriteScorekeeper(true);
 	    System.out.println(a.scorekeeper);
 	    System.out.println(instructions());
-	    a.overwriteGame();
+	    a.overwriteGame();*/
+	    a.overwriteGame(a.players.get(0));
+	    a.overwriteGame(a.players.get(1));
 	}else if(args.length < 3){
 	    System.out.println(welcomeInstructions());
 	    
