@@ -10,9 +10,9 @@ public class TileBag{
 	    ints.add(new Integer(i));
 	}
 	Collections.shuffle(ints);
-	System.out.println("Random Sequence of Ints from 0 to 99: "+"\n"+ints);
-	System.out.println("\n");
-	System.out.print("Sequence of randomly arranged tiles:"+"\n"+"[");
+	//System.out.println("Random Sequence of Ints from 0 to 99: "+"\n"+ints);
+	//System.out.println("\n");
+	//System.out.print("Sequence of randomly arranged tiles:"+"\n"+"[");
 	for(int start=0;start<100;start++){
 	    int z=0;
 	    z=ints.get(start);
@@ -29,7 +29,7 @@ public class TileBag{
 		}
 		if((z<sumS)&&(z>=sumFront)){
 		    String letterGenerated=alphabet[j];
-		    System.out.print(letterGenerated+",");
+		    //System.out.print(letterGenerated+",");
 		    Tile aa=new Tile(letterGenerated);
 		    a.add(aa);
 		    j=100;
@@ -39,7 +39,7 @@ public class TileBag{
 		}		    
 	    }
 	}
-	System.out.println("]");
+	//System.out.println("]");
     }
     public void drawTile(Player currentplayer){
 	if(a.size()==0){
