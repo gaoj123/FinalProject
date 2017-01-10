@@ -121,31 +121,47 @@ public class Scrabble{
 
     private void overwriteGame(Player currentPlayer){
 	System.out.println(Cmd.HIDE_CURSOR);
+	System.out.println(Cmd.CLEAR_SCREEN);
 	System.out.println(Cmd.go(1,1));
 	System.out.println(rewriteGame(currentPlayer));
     }
 
-    //public void runGame(){
+    public void runGame(){
+	int round = 0;
+	int turn = 0;
+        while(true){ //looping through/counting rounds
+	    for(turn = 0; turn < players.size(); turn++){ //looping through players
+		overwriteGame(players.get(turn)); //print the display for currentPlayer
 
-    //}
+		//key(board)listener getting and storing the input
+		//calling the appropriate player method depending on input (placing the tile and dealing with premium effects will go here...or we can check at the end of a turn if the player placed tiles. it may also be better to do the scoring within the placing the tiles b/c those values are kept in player anyway.)
+		
+		
+		if(true){ //checks for endgame conditions (use boolean helper functs)
+		    endGame(); //deals with the whole end-game sequence
+		}
+	    }
+	    endRoundScoring();
+	    round++;
+	}
+    }
 
     public void endGame(){
 	System.out.println(Cmd.go(1,1));
+	System.out.println("The Game Has Reached Its End"); //add an end-game msg
 	endGameScoring();
 	overwriteScorekeeper(true);
 	System.out.println(scorekeeper);
+	System.exit(0);
     }
     
     //should we include a chart of letter values on the bottom or top of the screen?
 
     //need the calculateScore method, but that depends on the words placed and intersections
 
-    //need to add keyboard listener
+    //update wordValidityCheck() or do so in Player when placing word
 
-    //need to add runGame method
-
-    //need to add endGame method
-
+    
     
     public static void main(String[] args){
 	/*Scrabble a=new Scrabble();
@@ -179,18 +195,7 @@ public class Scrabble{
 	System.out.println(jen.getEndTurn());*/
 	if(args.length == 3 && args[0].equals("default")){
 	    Scrabble a = new Scrabble(args[1], args[2]);
-	    /*System.out.println(a.gameBoard);
-	    System.out.println(a.players);
-	    a.endGameScoring();
-	    a.overwriteScorekeeper(true);
-	    System.out.println(a.scorekeeper);
-	    System.out.println(instructions());
-	    a.overwriteGame();*/
-	    a.overwriteGame(a.players.get(0));
-	    Cmd.wait(3000);
-	    a.overwriteGame(a.players.get(1));
-	    Cmd.wait(3000);
-	    a.endGame();
+	    a.runGame();
 	}else if(args.length < 3){
 	    System.out.println(welcomeInstructions());
 	}
