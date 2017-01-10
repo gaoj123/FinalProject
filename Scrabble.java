@@ -116,14 +116,24 @@ public class Scrabble{
     }
 
     private String rewriteGame(Player currentPlayer){
-	String game = gameBoard + "\n" + scorekeeper + "\nCurrent Player: " + currentPlayer.getName() + "\n" + currentPlayer + instructions();
-	return game;
+        return gameBoard + "\n" + scorekeeper + "\nCurrent Player: " + currentPlayer.getName() + "\n" + currentPlayer + instructions();
     }
 
     private void overwriteGame(Player currentPlayer){
 	System.out.println(Cmd.HIDE_CURSOR);
 	System.out.println(Cmd.go(1,1));
 	System.out.println(rewriteGame(currentPlayer));
+    }
+
+    //public void runGame(){
+
+    //}
+
+    public void endGame(){
+	System.out.println(Cmd.go(1,1));
+	endGameScoring();
+	overwriteScorekeeper(true);
+	System.out.println(scorekeeper);
     }
     
     //should we include a chart of letter values on the bottom or top of the screen?
@@ -177,10 +187,12 @@ public class Scrabble{
 	    System.out.println(instructions());
 	    a.overwriteGame();*/
 	    a.overwriteGame(a.players.get(0));
+	    Cmd.wait(3000);
 	    a.overwriteGame(a.players.get(1));
+	    Cmd.wait(3000);
+	    a.endGame();
 	}else if(args.length < 3){
 	    System.out.println(welcomeInstructions());
-	    
 	}
     }
 }
