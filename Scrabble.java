@@ -147,6 +147,7 @@ public class Scrabble{
     }
 
     public void endGame(){
+	System.out.println(Cmd.CLEAR_SCREEN);
 	System.out.println(Cmd.go(1,1));
 	System.out.println("The Game Has Reached Its End"); //add an end-game msg
 	endGameScoring();
