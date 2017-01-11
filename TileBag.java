@@ -41,6 +41,9 @@ public class TileBag{
 	}
 	//System.out.println("]");
     }
+    public int getSize(){
+	return a.size();
+    }
     public void drawTile(Player currentplayer){
 	if(a.size()==0){
 	    System.out.println("The tile bag is empty, so no additional tiles were added to your rack");
