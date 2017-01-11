@@ -122,6 +122,7 @@ public class Scrabble{
     }
 
     private String rewriteGame(Player currentPlayer){
+	overwriteScorekeeper(false);
         return gameBoard + "\n" + scorekeeper + "\nCurrent Player: " + currentPlayer.getName() + "\n" + currentPlayer + "\n" + instructions();
     }
 
@@ -153,7 +154,7 @@ public class Scrabble{
 			    players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			}
 		    }
-		}else{ //need code for rety if invalid character
+		}else{ //need code for retry if invalid character
 		    int nextSpace = currentInput.indexOf(" ");
 		    String word = currentInput.substring(0, nextSpace);
 		    currentInput = currentInput.substring(nextSpace + 1);
