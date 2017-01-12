@@ -77,8 +77,8 @@ public class Scrabble{
 	int totalRoundScore = 0;
 	for(int player = 0; player < players.size(); player++){
 	    totalRoundScore += players.get(player).getRoundScore();
-	    players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
-	    players.get(player).setRoundScore(0);
+	    //players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
+	    //players.get(player).setRoundScore(0);
 	}
 	totalRoundScores.add(Integer.valueOf(totalRoundScore));
     }
