@@ -169,7 +169,7 @@ public class Scrabble{
 		    tileBag.refillRack(players.get(turn));
 		    }
 		
-		//responses for incorrect input formatting
+		//edit for re-tries
 		//calling the appropriate player method depending on input (placing the tile and dealing with premium effects will go here...or we can check at the end of a turn if the player placed tiles. it may also be better to do the scoring within the placing the tiles b/c those values are kept in player anyway.)
 		
 		
