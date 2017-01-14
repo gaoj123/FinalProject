@@ -146,11 +146,14 @@ public class Scrabble{
 		}
 		if(currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
-		}else if((int) '1' <= (int)currentInput.charAt(0) &&
+		}
+		else if((int) '1' <= (int)currentInput.charAt(0) &&
 			 (int) '7' >= (int)currentInput.charAt(0)){ //limit it to indexes of rack (depending on rack size)
-		    for(int i = 0; i < currentInput.length() - 1; i++){
+		    // for(int i = 0; i < currentInput.length() - 1; i++){
+		    for(int i = 0; i < currentInput.length(); i++){
 			if((int) '1' <= (int)currentInput.charAt(i) &&
 			   (int) '7' >= (int)currentInput.charAt(i)){
+			    System.out.println(currentInput.charAt(i));
 			    players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			}
 		    }
