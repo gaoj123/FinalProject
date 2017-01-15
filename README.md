@@ -10,7 +10,7 @@
 <br>
 <p>To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default &lt;name of Player 1&gt; &lt;name of Player 2&gt;
 <br><br>
-Commands while game is running: <br>
+<u>Commands while game is running: </u><br>
 To attempt to place a word, enter &lt;word&gt; &lt;x-cor&gt; &lt;y-cor&gt; &lt;direction&gt;
 <br><br>
 To attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7
