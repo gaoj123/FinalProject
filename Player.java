@@ -452,97 +452,139 @@ public boolean lettersInRack(String word1){
 	}
 	return ret;
     }
-    public void placeWord(Board board, Scrabble game, String word,int x,int y,String direction){
+    public void placeWord(Board board, Scrabble game, String word,int x,int y,String direction, boolean emptyBoard){
     	boolean haveTilesOrNotInRack=true;
+	boolean empty=emptyBoard;
 	int col=x;
 	int row=y;
 	int arrayrow=14-row;
 	int arraycol=col;
 	boolean okayToLay=false;
 	int wordLength=word.length();
-	if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
-	    System.out.println("Position is off the board.  Please try again");
-	    endTurn=false;
+	boolean intersectAtLeastOnce=false;
+	if(direction.equals("h")){
+	    int col2=x;
+	    int row2=y;
+	    int arrayrow2=14-row2;
+	    int arraycol2=col2;
+	    int numIntersections=0;
+	    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
+		Tile ofConcern2=board.getTileOfSquare(arrayrow2,arraycol2+colCheck2);
+		System.out.println("occupied? "+board.squareOccupied(arrayrow2,arraycol2+colCheck2)+" same letter? "+word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
+		if (board.squareOccupied(arrayrow2,arraycol2+colCheck2)&&word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
+		    numIntersections+=1;
+		}
+	    }
+	    if(numIntersections>=1){
+		intersectAtLeastOnce=true;
+	    }
 	}
 	else{
-	    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
-		System.out.println("Position is on the board but can't place word.");
+	    int col2=x;
+	    int row2=y;
+	    int arrayrow2=14-row2;
+	    int arraycol2=col2;
+	    int numIntersections=0;
+	    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){
+		Tile ofConcern2=board.getTileOfSquare(arrayrow2+rowCheck2,arraycol2);
+		System.out.println("occupied? "+board.squareOccupied(arrayrow2+rowCheck2,arraycol2)+" same letter? "+word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
+		if(board.squareOccupied(arrayrow2+rowCheck2,arraycol2)&&word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
+		    numIntersections+=1;				   
+		}
+	    }
+	    if(numIntersections>=1){
+		intersectAtLeastOnce=true;
+	    }
+	}
+	if(intersectAtLeastOnce==false&&empty==false){
+	    System.out.println(intersectAtLeastOnce+ " "+empty);
+	    System.out.println("Word must use one of the letters already on the board");
+	}
+	else{
+	    if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+		System.out.println("Position is off the board.  Please try again");
+		endTurn=false;
 	    }
 	    else{
-		haveTilesOrNotInRack=lettersInRack(word);
-		System.out.println("in rack? "+haveTilesOrNotInRack);
-		if(!lettersInRack(word)){
-		    if(direction.equals("v")){
-			if(checkVert(board,word,x,y)){
-			    okayToLay=true;
-			}
-			else{
-			    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
-			}
-		    }
-		    else if(direction.equals("h")){
-			if(checkHor(board,word,x,y)){
-			    okayToLay=true;
-			}
-			else{
-			    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
-			}
-		    }
+		if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
+		    System.out.println("Position is on the board but can't place word.");
 		}
 		else{
-		    if(direction.equals("v")){
-			if(checkVert(board,word,x,y)){
-			    okayToLay=true;
+		    haveTilesOrNotInRack=lettersInRack(word);
+		    System.out.println("in rack? "+haveTilesOrNotInRack);
+		    if(!lettersInRack(word)){
+			if(direction.equals("v")){
+			    if(checkVert(board,word,x,y)){
+				okayToLay=true;
+			    }
+			    else{
+				System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+			    }
 			}
-			else{
-			    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+			else if(direction.equals("h")){
+			    if(checkHor(board,word,x,y)){
+				okayToLay=true;
+			    }
+			    else{
+				System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+			    }
 			}
 		    }
-		    else if(direction.equals("h")){
-			if(checkHor(board,word,x,y)){
-			    okayToLay=true;
+		    else{
+			if(direction.equals("v")){
+			    if(checkVert(board,word,x,y)){
+				okayToLay=true;
+			    }
+			    else{
+				System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+			    }
 			}
-			else{
-			    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+			else if(direction.equals("h")){
+			    if(checkHor(board,word,x,y)){
+				okayToLay=true;
+			    }
+			    else{
+				System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+			    }
 			}
+			//okayToLay=true;
 		    }
-		    //okayToLay=true;
-		}
-		if(okayToLay){
-		    boolean validOrNot=game.wordValidityCheck(word);
-		    System.out.println("valid word? "+word+" "+validOrNot);
-		    //int wordLength=word.length();
-		    if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
-			System.out.println("x and y between 0 and 14, so on board");
-			if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
-			    if(haveTilesOrNotInRack){
-				setWordRackTiles(board,word,x,y,direction);
+		    if(okayToLay){
+			boolean validOrNot=game.wordValidityCheck(word);
+			System.out.println("valid word? "+word+" "+validOrNot);
+			//int wordLength=word.length();
+			if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
+			    System.out.println("x and y between 0 and 14, so on board");
+			    if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
+				if(haveTilesOrNotInRack){
+				    setWordRackTiles(board,word,x,y,direction);
+				}
+				else if(direction.equals("h")){
+				    setWordHor(board,word,x,y);
+				}
+				else if(direction.equals("v")){
+				    setWordVert(board,word,x,y);
+				}
+				// System.out.println("point for letter: "+pointForTile);
+				// totalPointValue+=pointForTile;
+				// //removeFromRack(ofInterest);			  		
+				// System.out.println("total points: "+totalPointValue);
+				// endTurn=true;
 			    }
-			    else if(direction.equals("h")){
-				setWordHor(board,word,x,y);
-			    }
-			    else if(direction.equals("v")){
-				setWordVert(board,word,x,y);
-			    }
-			    // System.out.println("point for letter: "+pointForTile);
-			    // totalPointValue+=pointForTile;
-			    // //removeFromRack(ofInterest);			  		
-			    // System.out.println("total points: "+totalPointValue);
-			    // endTurn=true;
-			}
-			else{
-			    System.out.println("Position is on the board but cannot place word in position.  Please try again");
-			    endTurn=false;
+			    else{
+				System.out.println("Position is on the board but cannot place word in position.  Please try again");
+				endTurn=false;
 		    
+			    }
 			}
-		    }
-		    else if(validOrNot==false){
-			System.out.println("Invalid word.  Next player's turn.");
-			endTurn=true;
-		    }
-		    else if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
-			System.out.println("Position is off the board so cannot place word on board. Please try again");
-			endTurn=false;
+			else if(validOrNot==false){
+			    System.out.println("Invalid word.  Next player's turn.");
+			    endTurn=true;
+			}
+			else if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+			    System.out.println("Position is off the board so cannot place word on board. Please try again");
+			    endTurn=false;
+			}
 		    }
 		}
 	    }
