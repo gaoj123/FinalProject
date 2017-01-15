@@ -37,6 +37,8 @@ First word does not have a letter on the center square.
 Letter(s) are not in rack and are also not on the board at the appropriate positions if word is to be laid out.
 <br><br>
 Tiles are in rack but will be laid on a square that is already occupied (with a different letter) on the board.
+<br><br>
+Also, if a blank tile was just turned into a tile containing any letter of user's choice, the user can continue to place a word (still that user's turn).
 </p>
 <br>
 <h5>Move On To Next Player If/When ... </h5>
