@@ -462,6 +462,16 @@ public boolean lettersInRack(String word1){
 	boolean okayToLay=false;
 	int wordLength=word.length();
 	boolean intersectAtLeastOnce=false;
+	if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+	    System.out.println("Position is off the board.  Please try again");
+	    endTurn=false;
+	}
+	else{
+	    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
+			System.out.println("Position is on the board but can't place word.  Please try again");
+			endTurn=false;
+		    }
+	    else{
 	if(direction.equals("h")){
 	    int col2=x;
 	    int row2=y;
@@ -511,7 +521,7 @@ public boolean lettersInRack(String word1){
 		    int arraycol2=col2;
 		    int numIntersections=0;
 		    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
-			if (arraycol2+colCheck2==7){
+			if (arraycol2+colCheck2==7&&arrayrow==7){
 			    startingCenter=true;
 			}
 		    }
@@ -522,14 +532,14 @@ public boolean lettersInRack(String word1){
 		    int arrayrow2=14-row2;
 		    int arraycol2=col2;
 		    int numIntersections=0;
-		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){
-		
-			if(arrayrow2+rowCheck2==7){
+		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
+			if(arrayrow2+rowCheck2==7&&arraycol==7){
 			    startingCenter=true;				   
 			}
 		    }
 		}
 	    }
+	    System.out.println("starting center? "+startingCenter);
 	    if(empty&&!startingCenter){
 		System.out.println("First word must have a letter on the center square.  Please try again");
 		endTurn=false;
@@ -541,7 +551,8 @@ public boolean lettersInRack(String word1){
 		}
 		else{
 		    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
-			System.out.println("Position is on the board but can't place word.");
+			System.out.println("Position is on the board but can't place word.  Please try again");
+			endTurn=false;
 		    }
 		    else{
 			haveTilesOrNotInRack=lettersInRack(word);
@@ -553,6 +564,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    else if(direction.equals("h")){
@@ -561,9 +573,10 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+				    endTurn=false;
 				}
 			    }
-			}
+			}//also condition when square is occupied and tile is not in rack.  but maybe already checked in checkHor
 			else{
 			    if(direction.equals("v")){
 				if(checkVert(board,word,x,y)){
@@ -571,6 +584,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    else if(direction.equals("h")){
@@ -579,6 +593,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    //okayToLay=true;
@@ -624,6 +639,8 @@ public boolean lettersInRack(String word1){
 		}
 	    }
 	}
+	    }
+	}
     // else{
     // 	System.out.println("Word contains letters not in your tile rack.  Please try again with only valid letters");
     // 	endTurn=false;
@@ -654,11 +671,17 @@ public boolean lettersInRack(String word1){
 	System.out.println("index: "+index);
 	System.out.println("letter: "+letter);
 	if(tileAtRackIndex(index).getLetter().equals("?")){
-	    Tile inRack=this.tileAtRackIndex(index);
-	    this.removeFromRack(inRack);
-	    Tile rackTile=new Tile("?");
-	    rackTile.differentiate(letter);
-	    this.addToRack(index,rackTile);
+	    int ascii=(int)letter.charAt(0);
+	    if((ascii>='a'&&ascii<='z')||(ascii>='A'&&ascii<='Z')){
+		Tile inRack=this.tileAtRackIndex(index);
+		this.removeFromRack(inRack);
+		Tile rackTile=new Tile("?");
+		rackTile.differentiate(letter);
+		this.addToRack(index,rackTile);
+	    }
+	    else{
+		System.out.println("Invalid letter. Letter must be a letter in the alphabet.");
+	    }
 	}
 	else{
 	    System.out.println("Tile at that index in your rack is not a blank tile");
