@@ -16,4 +16,7 @@ To attempt to place a word, enter &lt;word&gt; &lt;x-cor&gt; &lt;y-cor&gt; &lt;d
 To attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7
 <br><br>
 To pass, enter 0</p>
+<br><br>
+<h3>Features</h3>
+<p></p>
 </html>
