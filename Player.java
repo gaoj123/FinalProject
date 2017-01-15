@@ -671,11 +671,17 @@ public boolean lettersInRack(String word1){
 	System.out.println("index: "+index);
 	System.out.println("letter: "+letter);
 	if(tileAtRackIndex(index).getLetter().equals("?")){
-	    Tile inRack=this.tileAtRackIndex(index);
-	    this.removeFromRack(inRack);
-	    Tile rackTile=new Tile("?");
-	    rackTile.differentiate(letter);
-	    this.addToRack(index,rackTile);
+	    int ascii=(int)letter.charAt(0);
+	    if((ascii>='a'&&ascii<='z')||(ascii>='A'&&ascii<='Z')){
+		Tile inRack=this.tileAtRackIndex(index);
+		this.removeFromRack(inRack);
+		Tile rackTile=new Tile("?");
+		rackTile.differentiate(letter);
+		this.addToRack(index,rackTile);
+	    }
+	    else{
+		System.out.println("Invalid letter. Letter must be a letter in the alphabet.");
+	    }
 	}
 	else{
 	    System.out.println("Tile at that index in your rack is not a blank tile");
