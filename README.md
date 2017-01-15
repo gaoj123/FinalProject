@@ -17,7 +17,7 @@ To attempt to exchange tiles, enter the positions of the tiles you would like to
 <br><br>
 To pass, enter 0
 <br><br>
-To turn a blank tile into a tile with any letter in the alphabet, enter position of "?" tile in rack (leftmost being 1 and rightmost being 7), followed by letter you want.  Format: <position of "?" tile><letter in alphabet>
+To turn a blank tile into a tile with any letter in the alphabet, enter position of "?" tile in rack (leftmost being 1 and rightmost being 7), followed by letter you want.  Format: &lt;position of "?" tile&gt; &lt;letter in alphabet&gt;
 </p>
 <br>
 <h3>Features</h3>
