@@ -125,7 +125,9 @@ public class Scrabble{
     }
 
     private static String instructions(){
+
 	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo turn a blank tile into any letter of the alphabet, enter <position of the '?' tile> <desired letter>\n\nTo pass, enter 0";
+
     }
 
     private String rewriteGame(Player currentPlayer){
@@ -163,6 +165,7 @@ public class Scrabble{
 		if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
 		}
+
 		else if('1' <= currentInput.charAt(0) &&
 			Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
 		    if((currentInput.length() >= 3) &&
@@ -183,6 +186,7 @@ public class Scrabble{
 				//after that, should do this too:
 				//System.out.println(players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1))));
 			    }
+
 			}
 		    }
 		}
@@ -209,6 +213,7 @@ public class Scrabble{
 		if(!players.get(turn).getEndTurn()){
 		    turn--;
 		}
+
 		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
 		    endGame(); //deals with the whole end-game sequence
 		}
