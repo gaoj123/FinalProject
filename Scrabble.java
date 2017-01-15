@@ -134,7 +134,6 @@ public class Scrabble{
     }
 
     private void overwriteGame(Player currentPlayer){
-	//System.out.println(Cmd.HIDE_CURSOR);
 	System.out.println(Cmd.CLEAR_SCREEN);
 	System.out.println(Cmd.go(1,1));
 	System.out.println(rewriteGame(currentPlayer));
@@ -143,9 +142,11 @@ public class Scrabble{
     public void runGame(){
 	int round = 0;
 	int turn = 0;
+	String report = "";
 	Scanner input = new Scanner(System.in);
         while(true){ //looping through/counting rounds
 	    for(turn = 0; turn < players.size(); turn++){ //looping through players
+		System.out.println(report);
 		overwriteGame(players.get(turn)); //print the display for currentPlayer
 		String currentInput = input.nextLine();
 		while(currentInput == null){
@@ -171,12 +172,16 @@ public class Scrabble{
 			indexx=Integer.parseInt(currentInput.substring(0,1));
 			String letterToChangeInto=currentInput.substring(2,3);
 			players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+			//System.out.println(players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto));
 		    }else{
 			for(int i = 0; i < currentInput.length(); i++){
 			    if('1' <= currentInput.charAt(i) &&
 			       Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
 				System.out.println(currentInput.charAt(i));
 				players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+				//should edit Player to check for inputs into exchange
+				//after that, should do this too:
+				//System.out.println(players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1))));
 			    }
 			}
 		    }
@@ -193,10 +198,13 @@ public class Scrabble{
 		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
 		    if(isEmpty){
 			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
+			//System.out.println(players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true));
 		    }else{
 			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+			//System.out.println(players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false));
 		    }
 		    tileBag.refillRack(players.get(turn));
+		    //I don't think it will need it, but may need to print this too
 		}
 		if(!players.get(turn).getEndTurn()){
 		    turn--;
