@@ -135,9 +135,10 @@ public class Scrabble{
         return gameBoard + "\n" + scorekeeper + "\nCurrent Player: " + currentPlayer.getName() + "\n" + currentPlayer + "\n" + instructions();
     }
 
-    private void overwriteGame(Player currentPlayer){
+    private void overwriteGame(Player currentPlayer, String report){
 	System.out.println(Cmd.CLEAR_SCREEN);
 	System.out.println(Cmd.go(1,1));
+	System.out.println(report);
 	System.out.println(rewriteGame(currentPlayer));
     }
 
@@ -148,8 +149,8 @@ public class Scrabble{
 	Scanner input = new Scanner(System.in);
         while(true){ //looping through/counting rounds
 	    for(turn = 0; turn < players.size(); turn++){ //looping through players
-		System.out.println(report);
-		overwriteGame(players.get(turn)); //print the display for currentPlayer
+		//System.out.println(report);
+		overwriteGame(players.get(turn), report); //print the display for currentPlayer
 		String currentInput = input.nextLine();
 		while(currentInput == null){
 		    currentInput = input.nextLine();
@@ -174,17 +175,17 @@ public class Scrabble{
 			int indexx=0;
 			indexx=Integer.parseInt(currentInput.substring(0,1));
 			String letterToChangeInto=currentInput.substring(2,3);
-			players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
-			//System.out.println(players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto));
+			//players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+		        report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
 		    }else{
 			for(int i = 0; i < currentInput.length(); i++){
 			    if('1' <= currentInput.charAt(i) &&
 			       Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
 				System.out.println(currentInput.charAt(i));
-				players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+				//players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 				//should edit Player to check for inputs into exchange
 				//after that, should do this too:
-				//System.out.println(players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1))));
+			        report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			    }
 
 			}
@@ -201,11 +202,11 @@ public class Scrabble{
 		    int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
 		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
 		    if(isEmpty){
-			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
-			//System.out.println(players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true));
+			//players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
+		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
 		    }else{
-			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
-			//System.out.println(players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false));
+			//players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
 		    }
 		    tileBag.refillRack(players.get(turn));
 		    //I don't think it will need it, but may need to print this too
