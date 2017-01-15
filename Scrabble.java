@@ -64,7 +64,7 @@ public class Scrabble{
 	    rowDivider += "-";
 	}
 	rowDivider += "+-----+----------------+";
-	scorekeeper += rowDivider + "\n|Player|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, 16) + "|" + rowDivider;
+	scorekeeper += rowDivider + "\n|Player" + extraSpacesNeeded("Player", maxNameLength) + "|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, 16) + "|" + rowDivider;
 	for(int player = 0; player < players.size(); player++){
 	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
 		"|" + players.get(player).getTotalScore() + extraSpacesNeeded(Integer.toString(players.get(player).getTotalScore()), 5) +
@@ -163,7 +163,7 @@ public class Scrabble{
 		    players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
 		}		
 		else if((int) '1' <= (int)currentInput.charAt(0) &&
-			 (int) '7' >= (int)currentInput.charAt(0)){ //limit it to indexes of rack (depending on rack size)
+			players.get(turn).getRackSize() >= (int)currentInput.charAt(0)){
 		    // for(int i = 0; i < currentInput.length() - 1; i++){
 		    for(int i = 0; i < currentInput.length(); i++){
 			if((int) '1' <= (int)currentInput.charAt(i) &&
@@ -185,16 +185,16 @@ public class Scrabble{
 		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
 		    if(isEmpty){
 			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
-		    }
-		    else{
+		    }else{
 			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
 		    }
 		    tileBag.refillRack(players.get(turn));
-		    }
+		}
+		if(!players.get(turn).getEndTurn()){
+		    turn--;
+		}
 		
 		//edit for re-tries
-		//calling the appropriate player method depending on input (placing the tile and dealing with premium effects will go here...or we can check at the end of a turn if the player placed tiles. it may also be better to do the scoring within the placing the tiles b/c those values are kept in player anyway.)
-		
 		
 		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ //checks for endgame conditions (use boolean helper functs)
 		    endGame(); //deals with the whole end-game sequence
