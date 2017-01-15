@@ -216,9 +216,17 @@ public boolean lettersInRack(String word1){
 	    
 			    
 	}
+	if(word1.length()==7){
+	    setRoundScore(totalPointValue+50);
+	    setTotalScore(totalPointValue+50);
+	}
+	else{
+	    setRoundScore(totalPointValue);
+	    setTotalScore(totalPointValue);
+	}
 	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	// setRoundScore(totalPointValue);
+	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
     public void setWordHor(Board board1,String word1,int x1,int y1){
@@ -313,9 +321,17 @@ public boolean lettersInRack(String word1){
 	    System.out.println("point for letter: "+pointForTile+" col"+arraycol);
 	    totalPointValue+=pointForTile;
 	}
+	if(word1.length()==7){
+	    setRoundScore(totalPointValue+50);
+	    setTotalScore(totalPointValue+50);
+	}
+	else{
+	    setRoundScore(totalPointValue);
+	    setTotalScore(totalPointValue);
+	}
 	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	// setRoundScore(totalPointValue);
+	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
     public void setWordVert(Board board1, String word1,int x1, int y1){
@@ -417,9 +433,17 @@ public boolean lettersInRack(String word1){
 	//     pointForTile=pointForTile*3;
 	// }
 	// board1.setEffectOfSquare(arrayrow+rowCheck,arraycol,"regular");
+	if(word1.length()==7){
+	    setRoundScore(totalPointValue+50);
+	    setTotalScore(totalPointValue+50);
+	}
+	else{
+	    setRoundScore(totalPointValue);
+	    setTotalScore(totalPointValue);
+	}
 	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	// setRoundScore(totalPointValue);
+	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
 
