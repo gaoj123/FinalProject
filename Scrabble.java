@@ -147,6 +147,13 @@ public class Scrabble{
 		if(currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
 		}
+		else if((int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&((currentInput.charAt(2)>='a'&&currentInput.charAt(2)<='z')||(currentInput.charAt(2)>='A'&&currentInput.charAt(2)<='Z'))){
+		    int indexx=0;
+		    indexx=Integer.parseInt(currentInput.substring(0,1));
+		    String letterToChangeInto="";
+		    letterToChangeInto=currentInput.substring(2,3);
+		    players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+		}
 		else if((int) '1' <= (int)currentInput.charAt(0) &&
 			 (int) '7' >= (int)currentInput.charAt(0)){ //limit it to indexes of rack (depending on rack size)
 		    // for(int i = 0; i < currentInput.length() - 1; i++){
@@ -157,7 +164,8 @@ public class Scrabble{
 			    players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			}
 		    }
-		}else{ //need code for retry if invalid character
+		}
+		else{ //need code for retry if invalid character
 		    int nextSpace = currentInput.indexOf(" ");
 		    String word = currentInput.substring(0, nextSpace);
 		    currentInput = currentInput.substring(nextSpace + 1);
