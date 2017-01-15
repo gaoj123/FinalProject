@@ -45,20 +45,24 @@ public class TileBag{
 	if(a.size()==0){
 	    System.out.println("The tile bag is empty, so no additional tiles were added to your rack");
 	}
-	int randomIndex= (int) (Math.random()*(a.size()-1));
-	//System.out.println("random index: "+randomIndex);
-	currentplayer.addToRack(a.get(randomIndex));
-	a.remove(randomIndex);
+	else{
+	    int randomIndex= (int) (Math.random()*(a.size()-1));
+	    //System.out.println("random index: "+randomIndex);
+	    currentplayer.addToRack(a.get(randomIndex));
+	    a.remove(randomIndex);
+	}
     }
     public void drawTile(int position, Player currentplayer){
 	if(a.size()==0){
 	    System.out.println("The tile bag is empty, so no additional tiles were added to your rack");
 	}
-	int randomIndex= (int) (Math.random()*(a.size()-1));
-	System.out.println("random index: "+randomIndex);
-	System.out.println(position+"");
-	currentplayer.addToRack(position, a.get(randomIndex));
-	a.remove(randomIndex);
+	else{
+	    int randomIndex= (int) (Math.random()*(a.size()-1));
+	    // System.out.println("random index: "+randomIndex);
+	    //System.out.println(position+"");
+	    currentplayer.addToRack(position, a.get(randomIndex));
+	    a.remove(randomIndex);
+	}
     }	
     public void refillRack(Player currentplayer){
 	if(a.size()==0){
