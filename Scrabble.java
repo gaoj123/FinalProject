@@ -144,17 +144,36 @@ public class Scrabble{
 		while(currentInput == null){
 		    currentInput = input.nextLine();
 		}
-		if(currentInput.charAt(0) == '0'){
+		boolean isEmpty=true;
+		for(int i=0;i<15;i++){
+		    for(int j=0;j<15;j++){
+			if(gameBoard.squareOccupied(i,j)){
+			    isEmpty=false;
+			}
+		    }
+		}
+		if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
-		}else if((int) '1' <= (int)currentInput.charAt(0) &&
+		}
+		else if(currentInput.length()>1&&(int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&((currentInput.charAt(2)>='a'&&currentInput.charAt(2)<='z')||(currentInput.charAt(2)>='A'&&currentInput.charAt(2)<='Z'))){
+		    int indexx=0;
+		    indexx=Integer.parseInt(currentInput.substring(0,1));
+		    String letterToChangeInto="";
+		    letterToChangeInto=currentInput.substring(2,3);
+		    players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+		}		
+		else if((int) '1' <= (int)currentInput.charAt(0) &&
 			 (int) '7' >= (int)currentInput.charAt(0)){ //limit it to indexes of rack (depending on rack size)
-		    for(int i = 0; i < currentInput.length() - 1; i++){
+		    // for(int i = 0; i < currentInput.length() - 1; i++){
+		    for(int i = 0; i < currentInput.length(); i++){
 			if((int) '1' <= (int)currentInput.charAt(i) &&
 			   (int) '7' >= (int)currentInput.charAt(i)){
+			    System.out.println(currentInput.charAt(i));
 			    players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			}
 		    }
-		}else{ //need code for retry if invalid character
+		}
+		else{ //need code for retry if invalid character
 		    int nextSpace = currentInput.indexOf(" ");
 		    String word = currentInput.substring(0, nextSpace);
 		    currentInput = currentInput.substring(nextSpace + 1);
@@ -164,8 +183,12 @@ public class Scrabble{
 		    nextSpace = currentInput.indexOf(" ");
 		    int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
 		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
-		    
-		    players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir);
+		    if(isEmpty){
+			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
+		    }
+		    else{
+			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+		    }
 		    tileBag.refillRack(players.get(turn));
 		    }
 		
