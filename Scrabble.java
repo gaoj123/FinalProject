@@ -118,7 +118,7 @@ public class Scrabble{
     }
 
     private static String instructions(){
-	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
+	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo turn a blank tile into any letter of the alphabet, enter <position of the '?' tile> <desired letter>\n\nTo pass, enter 0";
     }
 
     private String rewriteGame(Player currentPlayer){
@@ -193,10 +193,8 @@ public class Scrabble{
 		if(!players.get(turn).getEndTurn()){
 		    turn--;
 		}
-		
-		//edit for re-tries
-		
-		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ //checks for endgame conditions (use boolean helper functs)
+				
+		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
 		    endGame(); //deals with the whole end-game sequence
 		}
 	    }
@@ -219,15 +217,12 @@ public class Scrabble{
     }
     
     //should we include a chart of letter values on the bottom or top of the screen?
-    
-    //forgot to let differentiation occur in word placement if necessary
 
     
     
     public static void main(String[] args){
 	if(args.length == 3 && args[0].equals("default")){
 	    Scrabble a = new Scrabble(args[1], args[2]);
-	    //a.addKeyListener(this);
 	    a.runGame();
 	}else if(args.length < 3){
 	    System.out.println(welcomeInstructions());
