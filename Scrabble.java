@@ -118,7 +118,7 @@ public class Scrabble{
     }
 
     private static String instructions(){
-	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0";
+	return "Commands:\nTo attempt to place a word, enter <word> <x-cor> <y-cor> <direction>\nSingle digit x-cor and y-cor values should be entered as a single digit\nDirection can be indicated by typing 'h' for horizontal or 'v' for vertical\n\nTo attempt to exchange tiles, enter the positions of the tiles you would like to exchange, leftmost being 1 and rightmost being 7\n\nTo pass, enter 0\n\nTo turn blank tile into a tile containing any letter of the alphabet, enter <position of blank tile in rack (1 to 7)> <letter in the alphabet>\n";
     }
 
     private String rewriteGame(Player currentPlayer){
@@ -155,7 +155,8 @@ public class Scrabble{
 		if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
 		}
-		else if(currentInput.length()>1&&(int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&((currentInput.charAt(2)>='a'&&currentInput.charAt(2)<='z')||(currentInput.charAt(2)>='A'&&currentInput.charAt(2)<='Z'))){
+		// else if(currentInput.length()>1&&(int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&((currentInput.charAt(2)>='a'&&currentInput.charAt(2)<='z')||(currentInput.charAt(2)>='A'&&currentInput.charAt(2)<='Z'))){
+		else if(currentInput.length()>1&&(int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&(!((int)currentInput.charAt(2)>=(int)'1'&&(int)currentInput.charAt(2)<=(int)'7'))){  
 		    int indexx=0;
 		    indexx=Integer.parseInt(currentInput.substring(0,1));
 		    String letterToChangeInto="";
@@ -190,8 +191,10 @@ public class Scrabble{
 			players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
 		    }
 		    tileBag.refillRack(players.get(turn));
-		    }
-		
+		}
+		if(!players.get(turn).getEndTurn()){
+		    turn--;
+		}
 		//responses for incorrect input formatting
 		//calling the appropriate player method depending on input (placing the tile and dealing with premium effects will go here...or we can check at the end of a turn if the player placed tiles. it may also be better to do the scoring within the placing the tiles b/c those values are kept in player anyway.)
 		
