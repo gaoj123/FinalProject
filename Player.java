@@ -573,6 +573,21 @@ public boolean lettersInRack(String word1){
 	roundScore=0;
 	endTurn=true;
     }
+    public void requestDifferentiate(int index,String letter){
+	System.out.println("index: "+index);
+	System.out.println("letter: "+letter);
+	if(tileAtRackIndex(index).getLetter().equals("?")){
+	    Tile inRack=this.tileAtRackIndex(index);
+	    this.removeFromRack(inRack);
+	    Tile rackTile=new Tile("?");
+	    rackTile.differentiate(letter);
+	    this.addToRack(index,rackTile);
+	}
+	else{
+	    System.out.println("Tile at that index in your rack is not a blank tile");
+	}
+	endTurn=false;
+    }
     public void pass(){
 	roundScore=0;
 	endTurn=true;
