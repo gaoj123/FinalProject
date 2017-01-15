@@ -462,6 +462,16 @@ public boolean lettersInRack(String word1){
 	boolean okayToLay=false;
 	int wordLength=word.length();
 	boolean intersectAtLeastOnce=false;
+	if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+	    System.out.println("Position is off the board.  Please try again");
+	    endTurn=false;
+	}
+	else{
+	    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
+			System.out.println("Position is on the board but can't place word.  Please try again");
+			endTurn=false;
+		    }
+	    else{
 	if(direction.equals("h")){
 	    int col2=x;
 	    int row2=y;
@@ -541,7 +551,8 @@ public boolean lettersInRack(String word1){
 		}
 		else{
 		    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
-			System.out.println("Position is on the board but can't place word.");
+			System.out.println("Position is on the board but can't place word.  Please try again");
+			endTurn=false;
 		    }
 		    else{
 			haveTilesOrNotInRack=lettersInRack(word);
@@ -553,6 +564,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    else if(direction.equals("h")){
@@ -561,9 +573,10 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+				    endTurn=false;
 				}
 			    }
-			}
+			}//also condition when square is occupied and tile is not in rack.  but maybe already checked in checkHor
 			else{
 			    if(direction.equals("v")){
 				if(checkVert(board,word,x,y)){
@@ -571,6 +584,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    else if(direction.equals("h")){
@@ -579,6 +593,7 @@ public boolean lettersInRack(String word1){
 				}
 				else{
 				    System.out.println("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+				    endTurn=false;
 				}
 			    }
 			    //okayToLay=true;
@@ -622,6 +637,8 @@ public boolean lettersInRack(String word1){
 			}
 		    }
 		}
+	    }
+	}
 	    }
 	}
     // else{
