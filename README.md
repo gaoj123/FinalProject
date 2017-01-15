@@ -4,7 +4,7 @@
 <img src="http://globaltoynews.typepad.com/.a/6a0133ec87bd6d970b0168e4f88ca9970c-800wi">
 <br>
 <h5>Jenny Gao and Winnie Chen</h5>
-<h5>Period 10</h5>
+<h5>Period 10</h5><br><br>
 <h3>Overview</h3>
 <br>
 <p></p>
