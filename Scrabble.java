@@ -78,17 +78,24 @@ public class Scrabble{
 	for(int player = 0; player < players.size(); player++){
 	    totalRoundScore += players.get(player).getRoundScore();
 	    //players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
-	    //players.get(player).setRoundScore(0);
+	    players.get(player).setRoundScore(0);
 	}
 	totalRoundScores.add(Integer.valueOf(totalRoundScore));
     }
 
     private void endGameScoring(){
 	endRoundScoring();
+	int totalDeductions = 0;
 	for(int player = 0; player < players.size(); player++){
 	    players.get(player).setRoundScore(players.get(player).getTotalScore());
 	    for(int tilesLeft = players.get(player).getRackSize() - 1; tilesLeft >= 0; tilesLeft--){
 		players.get(player).setRoundScore(players.get(player).getRoundScore() - players.get(player).getPointsOfTileInRack(tilesLeft));
+		totalDeductions += players.get(player).getPointsOfTileInRack(tilesLeft);
+	    }
+	}
+	for(int player = 0; player < players.size(); player++){
+	    if(players.get(player).getRackSize() == 0){
+		players.get(player).setRoundScore(players.get(player).getRoundScore() + totalDeductions);
 	    }
 	}
     }
@@ -155,25 +162,26 @@ public class Scrabble{
 		if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
 		    players.get(turn).pass();
 		}
-		else if(currentInput.length()>1&&(int)currentInput.charAt(0)<=(int)'7'&&(int)currentInput.charAt(0)>=(int)'1'&&((currentInput.charAt(2)>='a'&&currentInput.charAt(2)<='z')||(currentInput.charAt(2)>='A'&&currentInput.charAt(2)<='Z'))){
-		    int indexx=0;
-		    indexx=Integer.parseInt(currentInput.substring(0,1));
-		    String letterToChangeInto="";
-		    letterToChangeInto=currentInput.substring(2,3);
-		    players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
-		}		
-		else if((int) '1' <= (int)currentInput.charAt(0) &&
-			players.get(turn).getRackSize() >= (int)currentInput.charAt(0)){
-		    // for(int i = 0; i < currentInput.length() - 1; i++){
-		    for(int i = 0; i < currentInput.length(); i++){
-			if((int) '1' <= (int)currentInput.charAt(i) &&
-			   (int) '7' >= (int)currentInput.charAt(i)){
-			    System.out.println(currentInput.charAt(i));
-			    players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+		else if('1' <= currentInput.charAt(0) &&
+			Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
+		    if((currentInput.length() >= 3) &&
+		       ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
+			(currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
+			int indexx=0;
+			indexx=Integer.parseInt(currentInput.substring(0,1));
+			String letterToChangeInto=currentInput.substring(2,3);
+			players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+		    }else{
+			for(int i = 0; i < currentInput.length(); i++){
+			    if('1' <= currentInput.charAt(i) &&
+			       Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
+				System.out.println(currentInput.charAt(i));
+				players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+			    }
 			}
 		    }
 		}
-		else{ //need code for retry if invalid character
+		else{ 
 		    int nextSpace = currentInput.indexOf(" ");
 		    String word = currentInput.substring(0, nextSpace);
 		    currentInput = currentInput.substring(nextSpace + 1);
@@ -193,7 +201,6 @@ public class Scrabble{
 		if(!players.get(turn).getEndTurn()){
 		    turn--;
 		}
-				
 		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
 		    endGame(); //deals with the whole end-game sequence
 		}
