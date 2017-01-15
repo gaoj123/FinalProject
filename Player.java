@@ -521,7 +521,7 @@ public boolean lettersInRack(String word1){
 		    int arraycol2=col2;
 		    int numIntersections=0;
 		    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
-			if (arraycol2+colCheck2==7){
+			if (arraycol2+colCheck2==7&&arrayrow==7){
 			    startingCenter=true;
 			}
 		    }
@@ -532,14 +532,14 @@ public boolean lettersInRack(String word1){
 		    int arrayrow2=14-row2;
 		    int arraycol2=col2;
 		    int numIntersections=0;
-		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){
-		
-			if(arrayrow2+rowCheck2==7){
+		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
+			if(arrayrow2+rowCheck2==7&&arraycol==7){
 			    startingCenter=true;				   
 			}
 		    }
 		}
 	    }
+	    System.out.println("starting center? "+startingCenter);
 	    if(empty&&!startingCenter){
 		System.out.println("First word must have a letter on the center square.  Please try again");
 		endTurn=false;
