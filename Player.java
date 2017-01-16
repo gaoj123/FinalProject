@@ -1074,7 +1074,8 @@ public boolean lettersInRack(String word1){
 	// 	System.out.println("Word contains letters not in your tile rack.  Please try again with only valid letters");
 	// 	endTurn=false;
 	// }
-	return "";
+	//return "";
+	return ("Points from intersections: "+intersectionPoints);
     }
 
     public Tile tileAtRackIndex(int indexx){
