@@ -50,6 +50,13 @@ Word entered is invalid (not found in dictionary).
 <br>
 <h3>Features</h3>
 <p>
+The score for each turn is the sum of the letter values in each word(s) formed or modified on that turn, plus the additional points obtained from placing letters on Premium Squares (different colored squares in terminal).<br><br>
+Regular Squares (black) - based on value of tiles<br>
+Double Letter (blue) - doubles the score of a letter placed on it<br>
+Triple Letter (green) - triples the score of a letter placed on it<br>
+Double Word (red) - score for an entire word is doubled. NOTE: the center square is a red square, which doubles the score for the first word<br>
+Triple Word (yellow) - score for an entire word is tripled<br><br>
+Letter and word premiums count only on the turn in which they are played. On later turns, letters already played on premium squares count at face value.<br><br>
 When two or more words are formed in the same play, each is scored. The points from intersections is displayed on the top of the board following "Points from intersections: "<br><br>
 BINGO! If you play seven tiles on a turn, it's a Bingo. You score a premium of 50 points after totaling your score for the turn.<br><br>
 Unplayed Letters: When the game ends, each player's score is reduced by the sum of his or her unplayed letters. In addition, if a player has used all of his or her letters, the sum of the other players' unplayed letters is added to that player's score.<br><br>
