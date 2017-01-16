@@ -50,7 +50,7 @@ public boolean lettersInRack(String word1){
 	}
 	return haveTilesOrNotInRack;
     }
-    public void setWordRackTiles(Board board1,String word1,int x1,int y1,String dir){
+    public void setWordRackTiles(Board board1,String word1,int x1,int y1,String dir,int scoreFromIntersections){
 	int totalPointValue=0;
 	int wordLength=word1.length();
 	int col=x1;
@@ -178,12 +178,13 @@ public boolean lettersInRack(String word1){
 	    
 			    
 	}
-	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	System.out.println("total points from letters: "+totalPointValue);
+	System.out.println("points from intersections: "+scoreFromIntersections);
+	setRoundScore(totalPointValue+scoreFromIntersections);
+	setTotalScore(totalPointValue+scoreFromIntersections);
 	endTurn=true;
     }
-    public void setWordHor(Board board1,String word1,int x1,int y1){
+    public void setWordHor(Board board1,String word1,int x1,int y1, int scoreFromIntersections){
 	//int pointForTile=0;
 	int totalPointValue=0;
 	int wordLength=word1.length();
@@ -276,11 +277,14 @@ public boolean lettersInRack(String word1){
 	    totalPointValue+=pointForTile;
 	}
 	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	System.out.println("points from intersections: "+scoreFromIntersections);
+	setRoundScore(totalPointValue+scoreFromIntersections);
+	setTotalScore(totalPointValue+scoreFromIntersections);
+	// setRoundScore(totalPointValue);
+	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
-    public void setWordVert(Board board1, String word1,int x1, int y1){
+    public void setWordVert(Board board1, String word1,int x1, int y1, int scoreFromIntersections){
 	int col=x1;
 	int totalPointValue=0;
 	int row=y1;
@@ -380,8 +384,11 @@ public boolean lettersInRack(String word1){
 	// }
 	// board1.setEffectOfSquare(arrayrow+rowCheck,arraycol,"regular");
 	System.out.println("total points: "+totalPointValue);
-	setRoundScore(totalPointValue);
-	setTotalScore(totalPointValue);
+	System.out.println("points from intersections: "+scoreFromIntersections);
+	setRoundScore(totalPointValue+scoreFromIntersections);
+	setTotalScore(totalPointValue+scoreFromIntersections);
+	// setRoundScore(totalPointValue);
+	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
 
@@ -439,6 +446,132 @@ public boolean lettersInRack(String word1){
 	}
 	return ret;
     }
+    public int topBoundHor(Board board2,int rowLetter,int colLetter){
+	int top=rowLetter;
+	while(board2.squareOccupied(top-1,colLetter)){
+	    top-=1;
+	}
+	return top;   
+    }
+    public int bottomBoundHor(Board board2,int rowLetter,int colLetter){
+	int bottom=rowLetter;
+	while(board2.squareOccupied(bottom+1,colLetter)){
+	    bottom+=1;
+	}
+	return bottom;
+    }
+    public int leftBoundVert(Board board2,int rowLetter,int colLetter){
+	int left=colLetter;
+	while(board2.squareOccupied(rowLetter,left-1)){
+	    left-=1;
+	}
+	return left;
+    }
+    public int rightBoundVert(Board board2,int rowLetter,int colLetter){
+	int right=colLetter;
+	while(board2.squareOccupied(rowLetter,right+1)){
+	    right+=1;
+	}
+	return right;
+    }
+    public String wordExaminingVert(String word1,int indexLetter,int rowLetter,int colLetter,Board board2,int left,int right){
+	int leftBound=left;
+	int rightBound=right;
+	String wordRet="";
+	String letterToAdd="";
+	System.out.println("square "+rowLetter+" "+colLetter);
+	for(int col=leftBound;col<rightBound+1;col++){
+	    if(board2.squareOccupied(rowLetter,col)){
+		System.out.println("col "+col);
+		Tile square=board2.getTileOfSquare(rowLetter,col);
+		letterToAdd=square.getLetter();
+	    }
+	    else{
+		for(int start=0;start<rack.size();start++){
+		    String letterLookingAt=word1.substring(indexLetter,indexLetter+1).toUpperCase();
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			int tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+		        letterToAdd=ofInterest.getLetter();
+		    }
+		}
+	    }
+	    wordRet+=letterToAdd;
+	}
+	return wordRet;
+    }
+    public String wordExaminingHor(String word1,int indexLetter,int rowLetter,int colLetter,Board board2,int top,int bottom){
+	int topBound=top;
+	int bottomBound=bottom;
+	String letterToAdd="";
+	String wordRet="";
+	System.out.println("square "+rowLetter+" "+colLetter);
+	for(int row=topBound;row<bottomBound+1;row++){
+	    if(board2.squareOccupied(row,colLetter)){
+		System.out.println("row "+row);
+		Tile square=board2.getTileOfSquare(row,colLetter);
+		letterToAdd=square.getLetter();
+	    }
+	    else{
+		for(int start=0;start<rack.size();start++){
+		    String letterLookingAt=word1.substring(indexLetter,indexLetter+1).toUpperCase();
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			int tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+		        letterToAdd=ofInterest.getLetter();
+		    }
+		}
+	    }
+	    wordRet+=letterToAdd;
+	}
+	return wordRet;
+    }
+    public int scoreOfWordHor(Board board2,String word1,int rowLetter,int colLetter){
+	int score=0;
+	for(int p=0;p<word1.length();p++){
+	    int tileIndexInRack=0;
+	    int tilePointValue=0;
+	    if(board2.squareOccupied(rowLetter,colLetter+p)){
+		Tile square=board2.getTileOfSquare(rowLetter,colLetter+p);
+		tilePointValue=square.getPoints();
+	    }
+	    else{
+		for(int start=0;start<rack.size();start++){
+		    String letterLookingAt=word1.substring(p,p+1).toUpperCase();
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+			tilePointValue=ofInterest.getPoints();
+		    }
+		}
+	    }
+	    score+=tilePointValue;
+	}
+	return score;
+    }
+    public int scoreOfWordVert(Board board2,String word1,int rowLetter,int colLetter){
+	int score=0;
+	for(int p=0;p<word1.length();p++){
+	    int tileIndexInRack=0;
+	    int tilePointValue=0;
+	    if(board2.squareOccupied(rowLetter+p,colLetter)){
+		Tile square=board2.getTileOfSquare(rowLetter+p,colLetter);
+		tilePointValue=square.getPoints();
+	    }
+	    else{
+		for(int start=0;start<rack.size();start++){
+		    String letterLookingAt=word1.substring(p,p+1).toUpperCase();
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+			tilePointValue=ofInterest.getPoints();
+		    }
+		}
+	    }
+	    score+=tilePointValue;
+	}
+	return score;
+    }
     public String placeWord(Board board, Scrabble game, String word,int x,int y,String direction, boolean emptyBoard){
     	boolean haveTilesOrNotInRack=true;
 	boolean empty=emptyBoard;
@@ -449,6 +582,7 @@ public boolean lettersInRack(String word1){
 	boolean okayToLay=false;
 	int wordLength=word.length();
 	boolean intersectAtLeastOnce=false;
+	int intersectionPoints=0;
 	if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
 	    endTurn=false;
 	    return ("Position is off the board.  Please try again");
@@ -462,60 +596,21 @@ public boolean lettersInRack(String word1){
 	    }
 	    else{
 		if(direction.equals("h")){
-	    int col2=x;
-	    int row2=y;
-	    int arrayrow2=14-row2;
-	    int arraycol2=col2;
-	    int numIntersections=0;
-	    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
-		Tile ofConcern2=board.getTileOfSquare(arrayrow2,arraycol2+colCheck2);
-		System.out.println("occupied? "+board.squareOccupied(arrayrow2,arraycol2+colCheck2)+" same letter? "+word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
-		// if (board.squareOccupied(arrayrow2,arraycol2+colCheck2)&&word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
-		if (board.squareOccupied(arrayrow2,arraycol2+colCheck2)){
-		    numIntersections+=1;
-		}
-	    }
-	    if(numIntersections>=1){
-		intersectAtLeastOnce=true;
-	    }
-	}
-	else{
-	    int col2=x;
-	    int row2=y;
-	    int arrayrow2=14-row2;
-	    int arraycol2=col2;
-	    int numIntersections=0;
-	    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){
-		Tile ofConcern2=board.getTileOfSquare(arrayrow2+rowCheck2,arraycol2);
-		System.out.println("occupied? "+board.squareOccupied(arrayrow2+rowCheck2,arraycol2)+" same letter? "+word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
-		// if(board.squareOccupied(arrayrow2+rowCheck2,arraycol2)&&word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
-		if(board.squareOccupied(arrayrow2+rowCheck2,arraycol2)){
-		    numIntersections+=1;				   
-		}
-	    }
-	    if(numIntersections>=1){
-		intersectAtLeastOnce=true;
-	    }
-	}
-	if(intersectAtLeastOnce==false&&empty==false){
-	    System.out.println(intersectAtLeastOnce+ " "+empty);
-	    endTurn=false;
-	    return ("Word must use one of the letters already on the board.   Please try again");
-	    //endTurn=false;
-	}
-	else{
-	    boolean startingCenter=false;
-	    if(empty){
-		if(direction.equals("h")){
 		    int col2=x;
 		    int row2=y;
 		    int arrayrow2=14-row2;
 		    int arraycol2=col2;
 		    int numIntersections=0;
 		    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
-			if (arraycol2+colCheck2==7&&arrayrow==7){
-			    startingCenter=true;
+			Tile ofConcern2=board.getTileOfSquare(arrayrow2,arraycol2+colCheck2);
+			System.out.println("occupied? "+board.squareOccupied(arrayrow2,arraycol2+colCheck2)+" same letter? "+word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
+			// if (board.squareOccupied(arrayrow2,arraycol2+colCheck2)&&word.substring(colCheck2,colCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
+			if (board.squareOccupied(arrayrow2,arraycol2+colCheck2)){
+			    numIntersections+=1;
 			}
+		    }
+		    if(numIntersections>=1){
+			intersectAtLeastOnce=true;
 		    }
 		}
 		else{
@@ -524,129 +619,265 @@ public boolean lettersInRack(String word1){
 		    int arrayrow2=14-row2;
 		    int arraycol2=col2;
 		    int numIntersections=0;
-		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
-			if(arrayrow2+rowCheck2==7&&arraycol==7){
-			    startingCenter=true;				   
+		    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){
+			Tile ofConcern2=board.getTileOfSquare(arrayrow2+rowCheck2,arraycol2);
+			System.out.println("occupied? "+board.squareOccupied(arrayrow2+rowCheck2,arraycol2)+" same letter? "+word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter()));
+			// if(board.squareOccupied(arrayrow2+rowCheck2,arraycol2)&&word.substring(rowCheck2,rowCheck2+1).toUpperCase().equals(ofConcern2.getLetter())){
+			if(board.squareOccupied(arrayrow2+rowCheck2,arraycol2)){
+			    numIntersections+=1;				   
+			}
+		    }
+		    if(numIntersections>=1){
+			intersectAtLeastOnce=true;
+		    }
+		}
+		boolean parallel=false;
+		for(int indexWord=0;indexWord<word.length();indexWord++){
+		    if(direction.equals("h")){
+			int col3=x;
+			int row3=y;
+			int arrayrow3=14-row3;
+			int arraycol3=col3;
+			int rowSquare=arrayrow3;
+			int colSquare=arraycol3+indexWord;
+			if(board.squareOccupied(rowSquare-1,colSquare)||board.squareOccupied(rowSquare,colSquare+1)||board.squareOccupied(rowSquare+1,colSquare)||board.squareOccupied(rowSquare,colSquare-1)){
+			    parallel=true;
+			}
+		    }
+		    else{
+			int col3=x;
+			int row3=y;
+			int arrayrow3=14-row3;
+			int arraycol3=col3;
+			int rowSquare=arrayrow3+indexWord;
+			int colSquare=arraycol3;
+			if(board.squareOccupied(rowSquare-1,colSquare)||board.squareOccupied(rowSquare,colSquare+1)||board.squareOccupied(rowSquare+1,colSquare)||board.squareOccupied(rowSquare,colSquare-1)){
+			    parallel=true;
 			}
 		    }
 		}
-	    }
-	    System.out.println("starting center? "+startingCenter);
-	    if(empty&&!startingCenter){
-		endTurn=false;
-		return ("First word must have a letter on the center square.  Please try again");
-		//endTurn=false;
-	    }
-	    else{
-		if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+		if(parallel==true){
+		    if(direction.equals("h")){
+			int col4=x;
+			int row4=y;
+			int arrayrow4=14-row4;
+			int arraycol4=col4;
+			int rowSquare=arrayrow4;
+			int colSquare=0;
+			System.out.println("word length "+word.length());
+			for(int wordIndex=0;wordIndex<word.length();wordIndex++){
+			    //colSquare=arraycol4+wordIndex;
+			    //System.out.println("arraycol "+arraycol4);
+			    System.out.println("colSquare "+(arraycol4+wordIndex));
+			    System.out.println("wordIndex "+wordIndex);
+			    System.out.println("word "+wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex)));
+			    System.out.println("top "+topBoundHor(board,rowSquare,arraycol4+wordIndex));
+			    System.out.println("bottom "+bottomBoundHor(board,rowSquare,arraycol4+wordIndex));
+			    String wordLook=wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex));
+			    if(wordLook.length()>1&&(!game.wordValidityCheck(wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex))))){
+				endTurn=false;
+				return("Invalid words are formed as a result of this word being parallel to existing word on board.  Please try again");
+			    }
+			    else if(wordLook.length()>1&&game.wordValidityCheck(wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex)))){
+				intersectionPoints+=scoreOfWordHor(board,word,rowSquare,arraycol4+wordIndex);
+			    }
+			    // if(game.wordValidityCheck(wordExaminingHor(word,wordIndex,rowSquare,colSquare,board,topBoundHor(board,rowSquare,colSquare),bottomBoundHor(board,rowSquare,colSquare)))&&word.length()>1){
+			    // 	intersectionPoints+=scoreOfWordHor(board,word,rowSquare,colSquare);
+			    // }
+			    // else if(word.length()>1&&(!game.wordValidityCheck(wordExaminingHor(word,wordIndex,rowSquare,colSquare,board,topBoundHor(board,rowSquare,colSquare),bottomBoundHor(board,rowSquare,colSquare))))){
+			    // 	endTurn=false;
+			    // 	return("Invalid words are formed as a result of this word being parallel to existing word on board.  Please try again");
+			    // }
+			}
+		    }
+		    else{
+			int col4=x;
+			int row4=y;
+			int arrayrow4=14-row4;
+			int arraycol4=col4;
+			int rowSquare=0;
+			int colSquare=arraycol4;
+			System.out.println("word length "+word.length());
+			for(int wordIndex=0;wordIndex<word.length();wordIndex++){
+			    // int col4=x;
+			    // int row4=y;
+			    // int arrayrow4=14-row4;
+			    // int arraycol4=col4;
+			    //Note: rowSquare=arrayrow4+wordIndex;
+			    System.out.println("rowSquare "+(arrayrow4+wordIndex));
+			    System.out.println("wordIndex "+wordIndex);
+			    //int colSquare=arraycol4;
+			    System.out.println("word "+wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare)));
+			    System.out.println("left "+leftBoundVert(board,arrayrow4+wordIndex,colSquare));
+			    System.out.println("right "+rightBoundVert(board,arrayrow4+wordIndex,colSquare));
+			    String wordLook=wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare));
+			    if(wordLook.length()>1&&(!game.wordValidityCheck(wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare))))){
+				endTurn=false;
+				return("Invalid words are formed as a result of this word being parallel to existing word on board.  Please try again");
+			    }
+			    else if(wordLook.length()>1&&game.wordValidityCheck(wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,rowSquare,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare)))){
+				intersectionPoints+=scoreOfWordVert(board,word,arrayrow4+wordIndex,colSquare);
+			    }
+			    // if(game.wordValidityCheck(wordExaminingVert(word,wordIndex,rowSquare,colSquare,board,leftBoundVert(board,rowSquare,colSquare),rightBoundVert(board,rowSquare,colSquare)))&&word.length()>1){
+			    // 	intersectionPoints+=scoreOfWordVert(board,word,rowSquare,colSquare);
+			    // }
+			    // else{
+			    // 	endTurn=false;
+			    // 	return("Invalid words are formed as a result of this word being parallel to existing word on board.  Please try again");
+			    //}
+			}
+		    }
+		}
+		if(intersectAtLeastOnce==false&&empty==false&&parallel==false){
+		    System.out.println(intersectAtLeastOnce+ " "+empty);
 		    endTurn=false;
-		    return ("Position is off the board.  Please try again");
+		    return ("Word must use one of the letters already on the board.   Please try again");
 		    //endTurn=false;
 		}
 		else{
-		    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
+		    boolean startingCenter=false;
+		    if(empty){
+			if(direction.equals("h")){
+			    int col2=x;
+			    int row2=y;
+			    int arrayrow2=14-row2;
+			    int arraycol2=col2;
+			    int numIntersections=0;
+			    for(int colCheck2=0;colCheck2<word.length();colCheck2++){
+				if (arraycol2+colCheck2==7&&arrayrow==7){
+				    startingCenter=true;
+				}
+			    }
+			}
+			else{
+			    int col2=x;
+			    int row2=y;
+			    int arrayrow2=14-row2;
+			    int arraycol2=col2;
+			    int numIntersections=0;
+			    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
+				if(arrayrow2+rowCheck2==7&&arraycol==7){
+				    startingCenter=true;				   
+				}
+			    }
+			}
+		    }
+		    System.out.println("starting center? "+startingCenter);
+		    if(empty&&!startingCenter){
 			endTurn=false;
-			return ("Position is on the board but can't place word.  Please try again");
+			return ("First word must have a letter on the center square.  Please try again");
 			//endTurn=false;
 		    }
 		    else{
-			haveTilesOrNotInRack=lettersInRack(word);
-			System.out.println("in rack? "+haveTilesOrNotInRack);
-			if(!lettersInRack(word)){
-			    if(direction.equals("v")){
-				if(checkVert(board,word,x,y)){
-				    okayToLay=true;
-				}
-				else{
-				    endTurn=false;
-				    return ("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
-				    //endTurn=false;
-				}
-			    }
-			    else if(direction.equals("h")){
-				if(checkHor(board,word,x,y)){
-				    okayToLay=true;
-				}
-				else{
-				    endTurn=false;
-				    return ("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
-				    //endTurn=false;
-				}
-			    }
-			}//also condition when square is occupied and tile is not in rack.  but maybe already checked in checkHor
-			else{
-			    if(direction.equals("v")){
-				if(checkVert(board,word,x,y)){
-				    okayToLay=true;
-				}
-				else{
-				    endTurn=false;
-				    return ("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
-				    //endTurn=false;
-				}
-			    }
-			    else if(direction.equals("h")){
-				if(checkHor(board,word,x,y)){
-				    okayToLay=true;
-				}
-				else{
-				    endTurn=false;
-				    return ("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
-				    //endTurn=false;
-				}
-			    }
-			    //okayToLay=true;
+			if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+			    endTurn=false;
+			    return ("Position is off the board.  Please try again");
+			    //endTurn=false;
 			}
-			if(okayToLay){
-			    boolean validOrNot=game.wordValidityCheck(word);
-			    System.out.println("valid word? "+word+" "+validOrNot);
-			    //int wordLength=word.length();
-			    if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
-				System.out.println("x and y between 0 and 14, so on board");
-				if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
-				    if(haveTilesOrNotInRack){
-					setWordRackTiles(board,word,x,y,direction);
+			else{
+			    if((direction.equals("h")&&!(x+wordLength<=15))||((direction.equals("v")&&!(y-wordLength>=-1)))){
+				endTurn=false;
+				return ("Position is on the board but can't place word.  Please try again");
+				//endTurn=false;
+			    }
+			    else{
+				haveTilesOrNotInRack=lettersInRack(word);
+				System.out.println("in rack? "+haveTilesOrNotInRack);
+				if(!lettersInRack(word)){
+				    if(direction.equals("v")){
+					if(checkVert(board,word,x,y)){
+					    okayToLay=true;
+					}
+					else{
+					    endTurn=false;
+					    return ("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+					    //endTurn=false;
+					}
 				    }
 				    else if(direction.equals("h")){
-					setWordHor(board,word,x,y);
+					if(checkHor(board,word,x,y)){
+					    okayToLay=true;
+					}
+					else{
+					    endTurn=false;
+					    return ("Cannot lay such a word at such a position.  Some tiles that are not in rack are also not on the board at appropriate positions (when word is laid out).   Please try again.");
+					    //endTurn=false;
+					}
 				    }
-				    else if(direction.equals("v")){
-					setWordVert(board,word,x,y);
-				    }
-				    // System.out.println("point for letter: "+pointForTile);
-				    // totalPointValue+=pointForTile;
-				    // //removeFromRack(ofInterest);			  		
-				    // System.out.println("total points: "+totalPointValue);
-				    // endTurn=true;
-				}
+				}//also condition when square is occupied and tile is not in rack.  but maybe already checked in checkHor
 				else{
-				    endTurn=false;
-				    return ("Position is on the board but cannot place word in position.  Please try again");
-				    //endTurn=false;
-		    
+				    if(direction.equals("v")){
+					if(checkVert(board,word,x,y)){
+					    okayToLay=true;
+					}
+					else{
+					    endTurn=false;
+					    return ("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+					    //endTurn=false;
+					}
+				    }
+				    else if(direction.equals("h")){
+					if(checkHor(board,word,x,y)){
+					    okayToLay=true;
+					}
+					else{
+					    endTurn=false;
+					    return ("Tiles are in rack but some squares on board are already occupied (when word is laid out).  Please try again.");
+					    //endTurn=false;
+					}
+				    }
+				    //okayToLay=true;
 				}
-			    }
-			    else if(validOrNot==false){
-				endTurn=true;
-				return ("Invalid word.  Next player's turn.");
-				//endTurn=true;
-			    }
-			    else if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
-				endTurn=false;
-				return ("Position is off the board so cannot place word on board. Please try again");
-				//endTurn=false;
+				if(okayToLay){
+				    boolean validOrNot=game.wordValidityCheck(word);
+				    System.out.println("valid word? "+word+" "+validOrNot);
+				    //int wordLength=word.length();
+				    if(validOrNot&&(x>=0&&x<=14)&&(y>=0&&y<=14)){
+					System.out.println("x and y between 0 and 14, so on board");
+					if((direction.equals("h")&&x+wordLength<=15)||(direction.equals("v")&&y-wordLength>=-1)){
+					    if(haveTilesOrNotInRack){
+						setWordRackTiles(board,word,x,y,direction,intersectionPoints);
+					    }
+					    else if(direction.equals("h")){
+						setWordHor(board,word,x,y,intersectionPoints);
+					    }
+					    else if(direction.equals("v")){
+						setWordVert(board,word,x,y,intersectionPoints);
+					    }
+					    // System.out.println("point for letter: "+pointForTile);
+					    // totalPointValue+=pointForTile;
+					    // //removeFromRack(ofInterest);			  		
+					    // System.out.println("total points: "+totalPointValue);
+					    // endTurn=true;
+					}
+					else{
+					    endTurn=false;
+					    return ("Position is on the board but cannot place word in position.  Please try again");
+					    //endTurn=false;
+		    
+					}
+				    }
+				    else if(validOrNot==false){
+					endTurn=true;
+					return ("Invalid word.  Next player's turn.");
+					//endTurn=true;
+				    }
+				    else if(!(x>=0&&x<=14)||!(y>=0&&y<=14)){
+					endTurn=false;
+					return ("Position is off the board so cannot place word on board. Please try again");
+					//endTurn=false;
+				    }
+				}
 			    }
 			}
 		    }
 		}
 	    }
 	}
-	    }
-	}
-    // else{
-    // 	System.out.println("Word contains letters not in your tile rack.  Please try again with only valid letters");
-    // 	endTurn=false;
-    // }
+	// else{
+	// 	System.out.println("Word contains letters not in your tile rack.  Please try again with only valid letters");
+	// 	endTurn=false;
+	// }
 	return "";
     }
 
