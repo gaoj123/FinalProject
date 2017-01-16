@@ -46,21 +46,6 @@ public class Scrabble{
 	return spacesNeeded;
     }
 
-    /*private int findPlace(Player lostPlayer, int index){
-	while(index >= 0 && lostPlayer.getRoundScore() <= players.get(index).getRoundScore()){
-	    if(lostPlayer.getRoundScore() == players.get(index).getRoundScore()){
-		if(lostPlayer.getTotalScore() < players.get(index).getTotalScore()){
-		    index--;
-		}else{
-		    return index;
-		}
-	    }else{
-		index--;
-	    }
-	}
-	return index;
-    }*/
-
     private int findPlace(Player lostPlayer, int index){
 	while(index >= 0 && lostPlayer.getRoundScore() >= players.get(index).getRoundScore()){
 	    if(lostPlayer.getRoundScore() == players.get(index).getRoundScore()){
@@ -172,7 +157,7 @@ public class Scrabble{
     }
 
     private static String welcomeInstructions(){
-	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 or more one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2> [<name of Player 3>] [<name of Player 4>] [<name of Player 5>]";
+	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 or more one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2> [<name of Player 3>] [<name of Player 4>] [<name of Player 5>]\n\nTo run a Scrabble game with custom settings for how many rounds the game should last, type: custom-rounds <number of rounds> <name of Player 1> <name of Player 2> [<name of Player 3>] [<name of Player 4>] ...etc.";
     }
 
     private static String instructions(){
@@ -193,85 +178,164 @@ public class Scrabble{
 	System.out.println(rewriteGame(currentPlayer));
     }
 
-    public void runGame(){
+    public void runGame(int roundLimit){
 	int round = 0;
 	int turn = 0;
 	String report = "";
 	Scanner input = new Scanner(System.in);
-        while(true){ //looping through/counting rounds
-	    for(turn = 0; turn < players.size(); turn++){ //looping through players
-		overwriteGame(players.get(turn), report); //print the display for currentPlayer
-		String currentInput = input.nextLine();
-		while(currentInput == null){
-		    currentInput = input.nextLine();
-		}
-		boolean isEmpty=true;
-		for(int i=0;i<15;i++){
-		    for(int j=0;j<15;j++){
-			if(gameBoard.squareOccupied(i,j)){
-			    isEmpty=false;
-			}
+	if(roundLimit <= 0){
+	    while(true){ //looping through/counting rounds
+		for(turn = 0; turn < players.size(); turn++){ //looping through players
+		    overwriteGame(players.get(turn), report); //print the display for currentPlayer
+		    String currentInput = input.nextLine();
+		    while(currentInput == null){
+			currentInput = input.nextLine();
 		    }
-		}
-		if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
-		    players.get(turn).pass();
-		}
-
-		else if('1' <= currentInput.charAt(0) &&
-			Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
-		    if((currentInput.length() >= 3) &&
-		       ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
-			(currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
-			int indexx=0;
-			indexx=Integer.parseInt(currentInput.substring(0,1));
-			String letterToChangeInto=currentInput.substring(2,3);
-		        report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
-		    }else{
-			for(int i = 0; i < currentInput.length(); i++){
-			    if('1' <= currentInput.charAt(i) &&
-			       Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
-				System.out.println(currentInput.charAt(i));
-			        report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+		    boolean isEmpty=true;
+		    for(int i=0;i<15;i++){
+			for(int j=0;j<15;j++){
+			    if(gameBoard.squareOccupied(i,j)){
+				isEmpty=false;
 			    }
-
 			}
 		    }
-		}
-		else{ 
-		    int nextSpace = currentInput.indexOf(" ");
-		    String word = currentInput.substring(0, nextSpace);
-		    currentInput = currentInput.substring(nextSpace + 1);
-		    nextSpace = currentInput.indexOf(" ");
-		    int xCor = Integer.parseInt(currentInput.substring(0, nextSpace));
-		    currentInput = currentInput.substring(nextSpace + 1);
-		    nextSpace = currentInput.indexOf(" ");
-		    int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
-		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
-		    if(isEmpty){
-		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
-		    }else{
-		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+		    if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
+			players.get(turn).pass();
 		    }
-		    tileBag.refillRack(players.get(turn));
-		}
+
+		    else if('1' <= currentInput.charAt(0) &&
+			    Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
+			if((currentInput.length() >= 3) &&
+			   ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
+			    (currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
+			    int indexx=0;
+			    indexx=Integer.parseInt(currentInput.substring(0,1));
+			    String letterToChangeInto=currentInput.substring(2,3);
+			    report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+			}else{
+			    for(int i = 0; i < currentInput.length(); i++){
+				if('1' <= currentInput.charAt(i) &&
+				   Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
+				    System.out.println(currentInput.charAt(i));
+				    report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+				}
+
+			    }
+			}
+		    }
+		    else{ 
+			int nextSpace = currentInput.indexOf(" ");
+			String word = currentInput.substring(0, nextSpace);
+			currentInput = currentInput.substring(nextSpace + 1);
+			nextSpace = currentInput.indexOf(" ");
+			int xCor = Integer.parseInt(currentInput.substring(0, nextSpace));
+			currentInput = currentInput.substring(nextSpace + 1);
+			nextSpace = currentInput.indexOf(" ");
+			int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
+			String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
+			if(isEmpty){
+			    report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
+			}else{
+			    report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+			}
+			tileBag.refillRack(players.get(turn));
+		    }
 
 
-		//should make a check for the format of placing a word too and a return like "invalid format of a command/invalid command format" if "else"
+		    //should make a check for the format of placing a word too and a return like "invalid format of a command/invalid command format" if "else"
 		
 		
-		if(!players.get(turn).getEndTurn()){
-		    turn--;
-		}
+		    if(!players.get(turn).getEndTurn()){
+			turn--;
+		    }
 
-		if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
-		    endGame(); //deals with the whole end-game sequence
+		    if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
+			endGame(); //deals with the whole end-game sequence
+		    }
 		}
+		endRoundScoring();
+		if(round > 1 && totalRoundScores.get(round) + totalRoundScores.get(round - 1) + totalRoundScores.get(round - 2) == 0){
+		    endGame();
+		}
+		round++;
 	    }
-	    endRoundScoring();
-	    if(round > 1 && totalRoundScores.get(round) + totalRoundScores.get(round - 1) + totalRoundScores.get(round - 2) == 0){
-		endGame();
+	}else{
+	    while(roundLimit > round){ 
+		for(turn = 0; turn < players.size(); turn++){ //looping through players
+		    overwriteGame(players.get(turn), report); //print the display for currentPlayer
+		    String currentInput = input.nextLine();
+		    while(currentInput == null){
+			currentInput = input.nextLine();
+		    }
+		    boolean isEmpty=true;
+		    for(int i=0;i<15;i++){
+			for(int j=0;j<15;j++){
+			    if(gameBoard.squareOccupied(i,j)){
+				isEmpty=false;
+			    }
+			}
+		    }
+		    if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
+			players.get(turn).pass();
+		    }
+
+		    else if('1' <= currentInput.charAt(0) &&
+			    Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
+			if((currentInput.length() >= 3) &&
+			   ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
+			    (currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
+			    int indexx=0;
+			    indexx=Integer.parseInt(currentInput.substring(0,1));
+			    String letterToChangeInto=currentInput.substring(2,3);
+			    report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
+			}else{
+			    for(int i = 0; i < currentInput.length(); i++){
+				if('1' <= currentInput.charAt(i) &&
+				   Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
+				    System.out.println(currentInput.charAt(i));
+				    report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
+				}
+
+			    }
+			}
+		    }
+		    else{ 
+			int nextSpace = currentInput.indexOf(" ");
+			String word = currentInput.substring(0, nextSpace);
+			currentInput = currentInput.substring(nextSpace + 1);
+			nextSpace = currentInput.indexOf(" ");
+			int xCor = Integer.parseInt(currentInput.substring(0, nextSpace));
+			currentInput = currentInput.substring(nextSpace + 1);
+			nextSpace = currentInput.indexOf(" ");
+			int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
+			String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
+			if(isEmpty){
+			    report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
+			}else{
+			    report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
+			}
+			tileBag.refillRack(players.get(turn));
+		    }
+
+
+		    //should make a check for the format of placing a word too and a return like "invalid format of a command/invalid command format" if "else"
+		
+		
+		    if(!players.get(turn).getEndTurn()){
+			turn--;
+		    }
+
+		    if(tileBag.getSize() == 0 && players.get(turn).getRackSize() == 0){ 
+			endGame(); //deals with the whole end-game sequence
+		    }
+		}
+		endRoundScoring();
+		if(round > 1 && totalRoundScores.get(round) + totalRoundScores.get(round - 1) + totalRoundScores.get(round - 2) == 0){
+		    endGame();
+		}
+		round++;
 	    }
-	    round++;
+	    endGame();
 	}
     }
 
@@ -282,6 +346,15 @@ public class Scrabble{
 	overwriteScorekeeper(true);
 	System.out.println(scorekeeper);
 	System.exit(0);
+    }
+
+    public static boolean isStringInt(String string){
+	try{
+	    Integer.parseInt(string);
+	    return true;
+	}catch(NumberFormatException e){
+	    return false;
+	}
     }
     
     //should we include a chart of letter values on the bottom or top of the screen?
@@ -295,7 +368,15 @@ public class Scrabble{
 		stringOfPlayerNames += args[i] + " ";
 	    }
 	    Scrabble a = new Scrabble(stringOfPlayerNames); 
-	    a.runGame();
+	    a.runGame(0);
+	}else if(args.length >= 4 && args[0].equals("custom-rounds") && isStringInt(args[1])){
+	    int numRounds = Integer.parseInt(args[1]);
+	    String stringOfPlayerNames = "";
+	    for(int i = 2; i < args.length; i++){
+		stringOfPlayerNames += args[i] + " ";
+	    }
+	    Scrabble a = new Scrabble(stringOfPlayerNames); 
+	    a.runGame(numRounds);
 	}else{
 	    System.out.println(welcomeInstructions());
 	}
