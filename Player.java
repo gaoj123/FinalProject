@@ -225,22 +225,36 @@ public boolean lettersInRack(String word1){
 		// removeFromRack(ofInterest);
 	    }
 	    else if(ofConcern.getLetter().equals(" ")){
-		Tile createTile=new Tile(word1.substring(colCheck,colCheck+1));
-		//don't permit ? as letter
-		pointForTile=createTile.getPoints();
-		board1.setTileOfSquare(arrayrow,arraycol+colCheck,createTile);
+		// Tile createTile=new Tile(word1.substring(colCheck,colCheck+1));
+		// //don't permit ? as letter
+		// pointForTile=createTile.getPoints();
+		// board1.setTileOfSquare(arrayrow,arraycol+colCheck,createTile);
 		//arraycol+=1;
-		for(int p=0;p<word1.length();p++){
-		    int tileIndexInRack=0;
-		    for(int start=0;start<rack.size();start++){
-			String letterLookingAt=word1.substring(p,p+1).toUpperCase();
-			if(letterLookingAt.equals(rack.get(start).getLetter())){
-			    tileIndexInRack=start;
-			    Tile ofInterest=rack.get(tileIndexInRack);
-			    removeFromRack(ofInterest);
-			}
+		String letterLookingAt=word1.substring(colCheck,colCheck+1).toUpperCase();
+		int tileIndexInRack=0;
+		for(int start=0;start<rack.size();start++){
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+			pointForTile=ofInterest.getPoints();
+			board1.setTileOfSquare(arrayrow,arraycol+colCheck,ofInterest);
+			removeFromRack(ofInterest);
 		    }
 		}
+		
+		// for(int p=0;p<word1.length();p++){
+		//     int tileIndexInRack=0;
+		//     for(int start=0;start<rack.size();start++){
+		// 	String letterLookingAt=word1.substring(p,p+1).toUpperCase();
+		// 	if(letterLookingAt.equals(rack.get(start).getLetter())){
+		// 	    tileIndexInRack=start;
+		// 	    Tile ofInterest=rack.get(tileIndexInRack);
+		// 	    pointForTile=ofInterest.getPoints();
+		// 	    board1.setTileOfSquare(arrayrow,arraycol+colCheck,ofInterest);
+		// 	    removeFromRack(ofInterest);
+		// 	}
+		//     }
+		// }
 	    }
 	    String effect=board1.getEffectOfSquare(arrayrow,arraycol+colCheck);
 	    System.out.println(effect);
@@ -326,24 +340,40 @@ public boolean lettersInRack(String word1){
 		// removeFromRack(ofInterest);
 	    }
 	    else if(ofConcern.getLetter().equals(" ")){
-		Tile createTile=new Tile(word1.substring(rowCheck,rowCheck+1));
+		//Tile createTile=new Tile(word1.substring(rowCheck,rowCheck+1));
 		System.out.println("using own tile");
 		//don't permit ? as letter
-		pointForTile=createTile.getPoints();
+		
+		//pointForTile=createTile.getPoints();
+		
 		//board1.setTileOfSquare(arrayrow,arraycol,createTile);
 		//	arrayrow+=1;
-		board1.setTileOfSquare(arrayrow+rowCheck,arraycol,createTile);
-		for(int p=0;p<word1.length();p++){
-		    int tileIndexInRack=0;
-		    for(int start=0;start<rack.size();start++){
-			String letterLookingAt=word1.substring(p,p+1).toUpperCase();
-			if(letterLookingAt.equals(rack.get(start).getLetter())){
-			    tileIndexInRack=start;
-			    Tile ofInterest=rack.get(tileIndexInRack);
-			    removeFromRack(ofInterest);
-			}
+		
+		//board1.setTileOfSquare(arrayrow+rowCheck,arraycol,createTile);
+		String letterLookingAt=word1.substring(rowCheck,rowCheck+1).toUpperCase();
+		int tileIndexInRack=0;
+		for(int start=0;start<rack.size();start++){
+		    if(letterLookingAt.equals(rack.get(start).getLetter())){
+			tileIndexInRack=start;
+			Tile ofInterest=rack.get(tileIndexInRack);
+			pointForTile=ofInterest.getPoints();
+			board1.setTileOfSquare(arrayrow+rowCheck,arraycol,ofInterest);
+			removeFromRack(ofInterest);
 		    }
 		}
+		// for(int p=0;p<word1.length();p++){
+		//     int tileIndexInRack=0;
+		//     for(int start=0;start<rack.size();start++){
+		// 	String letterLookingAt=word1.substring(p,p+1).toUpperCase();
+		// 	if(letterLookingAt.equals(rack.get(start).getLetter())){
+		// 	    tileIndexInRack=start;
+		// 	    Tile ofInterest=rack.get(tileIndexInRack);
+		// 	    pointForTile=ofInterest.getPoints();
+		// 	    board1.setTileOfSquare(arrayrow+rowCheck,arraycol,ofInterest);
+		// 	    removeFromRack(ofInterest);
+		// 	}
+		//     }
+		// }
 	    }
 	    else{
 		System.out.println("none"+ofConcern.getLetter());
@@ -673,6 +703,34 @@ public boolean lettersInRack(String word1){
 			    System.out.println("word "+wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex)));
 			    System.out.println("top "+topBoundHor(board,rowSquare,arraycol4+wordIndex));
 			    System.out.println("bottom "+bottomBoundHor(board,rowSquare,arraycol4+wordIndex));
+			    if(wordIndex==0){
+				String horWordAcross=wordExaminingVert(word,wordIndex,rowSquare,arraycol4,board,leftBoundVert(board,rowSquare,arraycol4),rightBoundVert(board,rowSquare,arraycol4));
+				int addStart=1;
+				int j=1;
+				while(j<word.length()){
+				    if(board.squareOccupied(rowSquare,arraycol4+j)){
+					addStart+=1;
+					j+=1;
+				    }
+				    else{
+					j=word.length()+1;
+				    }
+				}
+				System.out.println("addstart "+addStart);
+				// for(int j=0;j<word.length();j++){
+				//     if(board.squareOccupied(rowSquare,arraycol4+j)){
+				// 	addStart+=1;
+				//     }
+				// }
+				for(int i=addStart;i<word.length();i++){
+				    horWordAcross=horWordAcross+word.substring(i,i+1);
+				}
+				if(horWordAcross.length()>1&&(!game.wordValidityCheck(horWordAcross))){
+				    endTurn=false;
+				    System.out.println(horWordAcross);
+				    return ("Invalid words are formed as a result of this word having tiles adjacent to existing word on board.  Please try again");
+				}
+			    }								   
 			    String wordLook=wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex));
 			    if(wordLook.length()>1&&(!game.wordValidityCheck(wordExaminingHor(word,wordIndex,rowSquare,arraycol4+wordIndex,board,topBoundHor(board,rowSquare,arraycol4+wordIndex),bottomBoundHor(board,rowSquare,arraycol4+wordIndex))))){
 				endTurn=false;
@@ -710,6 +768,39 @@ public boolean lettersInRack(String word1){
 			    System.out.println("word "+wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare)));
 			    System.out.println("left "+leftBoundVert(board,arrayrow4+wordIndex,colSquare));
 			    System.out.println("right "+rightBoundVert(board,arrayrow4+wordIndex,colSquare));
+			    if(wordIndex==0){
+				String vertWordDown=wordExaminingHor(word,wordIndex,arrayrow4,colSquare,board,topBoundHor(board,arrayrow4,colSquare),bottomBoundHor(board,arrayrow4,colSquare));
+				int addStart=1;
+				int j=1;
+				while (j<word.length()){
+				    if(board.squareOccupied(arrayrow4+j,colSquare)){
+					addStart+=1;
+					j+=1;
+				    }
+				    else{
+					j=word.length()+1;
+				    }
+				}
+				System.out.println("addstart "+addStart);
+				// for(int j=0;j<word.length();j++){
+				//     if(board.squareOccupied(arrayrow4+j,colSquare)){
+				// 	addStart+=1;
+				//     }
+				// }
+				// for(int j=0;j<vertWordDown.length();j++){
+				//     if(word.substring(0,1).equals(vertWordDown.substring(j,j+1))){
+				// 	addStart=j;
+				//     }
+				// }
+				for(int i=addStart;i<word.length();i++){
+				    vertWordDown=vertWordDown+word.substring(i,i+1);
+				}
+				if(vertWordDown.length()>1&&(!game.wordValidityCheck(vertWordDown))){
+				    System.out.println(vertWordDown);
+				    endTurn=false;
+				    return ("Invalid words are formed as a result of this word having tiles adjacent to existing word on board.  Please try again");
+				}
+			    }		
 			    String wordLook=wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare));
 			    if(wordLook.length()>1&&(!game.wordValidityCheck(wordExaminingVert(word,wordIndex,arrayrow4+wordIndex,colSquare,board,leftBoundVert(board,arrayrow4+wordIndex,colSquare),rightBoundVert(board,arrayrow4+wordIndex,colSquare))))){
 				endTurn=false;
