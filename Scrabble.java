@@ -32,7 +32,6 @@ public class Scrabble{
 	    if(dictWordList.get(i).equals(playersWord.toUpperCase())){
 		status=true;
 	    }
-	    //System.out.println(word.toUpperCase());
 	}
 	return status;
     }
@@ -77,7 +76,6 @@ public class Scrabble{
 	int totalRoundScore = 0;
 	for(int player = 0; player < players.size(); player++){
 	    totalRoundScore += players.get(player).getRoundScore();
-	    //players.get(player).setTotalScore(players.get(player).getTotalScore() + players.get(player).getRoundScore());
 	    players.get(player).setRoundScore(0);
 	}
 	totalRoundScores.add(Integer.valueOf(totalRoundScore));
@@ -99,29 +97,7 @@ public class Scrabble{
 	    }
 	}
     }
-
-    /*public Scrabble(String nameP1, String nameP2){
-	initializeArrayList();
-	players = new ArrayList<Player>(0);
-	double P1Roll = Math.random();
-	double P2Roll = Math.random();
-	if(P1Roll < P2Roll){
-	    players.add(new Player(nameP1));
-	    players.add(new Player(nameP2));
-	}else{
-	    players.add(new Player(nameP2));
-	    players.add(new Player(nameP1));
-	}
-	gameBoard = new Board();
-	tileBag = new TileBag();
-	tileBag.refillRack(players.get(0));
-	tileBag.refillRack(players.get(1));
-	overwriteScorekeeper(false);
-	totalRoundScores = new ArrayList<Integer>(0);
-    }*/
-
     
-    ///*------------------------------------------------------------------------
     public Scrabble(String playerNames){
 	initializeArrayList();
 	players = new ArrayList<Player>(0);
@@ -147,11 +123,9 @@ public class Scrabble{
 	overwriteScorekeeper(false);
 	totalRoundScores = new ArrayList<Integer>(0);
     }
-    //------------------------------------------------------------------------*/
-    
 
     private static String welcomeInstructions(){
-	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>";
+	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 or more one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2> [<name of Player 3>] [<name of Player 4>] [<name of Player 5>]";
     }
 
     private static String instructions(){
@@ -179,7 +153,6 @@ public class Scrabble{
 	Scanner input = new Scanner(System.in);
         while(true){ //looping through/counting rounds
 	    for(turn = 0; turn < players.size(); turn++){ //looping through players
-		//System.out.println(report);
 		overwriteGame(players.get(turn), report); //print the display for currentPlayer
 		String currentInput = input.nextLine();
 		while(currentInput == null){
@@ -205,16 +178,12 @@ public class Scrabble{
 			int indexx=0;
 			indexx=Integer.parseInt(currentInput.substring(0,1));
 			String letterToChangeInto=currentInput.substring(2,3);
-			//players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
 		        report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
 		    }else{
 			for(int i = 0; i < currentInput.length(); i++){
 			    if('1' <= currentInput.charAt(i) &&
 			       Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
 				System.out.println(currentInput.charAt(i));
-				//players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
-				//should edit Player to check for inputs into exchange
-				//after that, should do this too:
 			        report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 			    }
 
@@ -232,14 +201,11 @@ public class Scrabble{
 		    int yCor = Integer.parseInt(currentInput.substring(0, nextSpace));
 		    String dir = currentInput.substring(nextSpace + 1, nextSpace + 2);
 		    if(isEmpty){
-			//players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
 		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,true);
 		    }else{
-			//players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
 		        report = players.get(turn).placeWord(gameBoard, this, word, xCor, yCor, dir,false);
 		    }
 		    tileBag.refillRack(players.get(turn));
-		    //I don't think it will need it, but may need to print this too
 		}
 
 
@@ -277,13 +243,6 @@ public class Scrabble{
     
     
     public static void main(String[] args){
-	/*if(args.length == 3 && args[0].equals("default")){
-	    Scrabble a = new Scrabble(args[1], args[2]);
-	    a.runGame();
-	}else if(args.length < 3){
-	    System.out.println(welcomeInstructions());
-	    }*/
-
 	if(args.length >= 3 && args[0].equals("default")){
 	    String stringOfPlayerNames = "";
 	    for(int i = 1; i < args.length; i++){
