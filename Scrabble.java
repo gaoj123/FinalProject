@@ -95,6 +95,7 @@ public class Scrabble{
 	}else{
 	    rowDivider += "+-----+-------------+";
 	}
+	//add ranking numbers next to player names in addition to possibility for ties
 	scorekeeper += rowDivider + "\n|Player" + extraSpacesNeeded("Player", maxNameLength) + "|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, lastColLabel.length()) + "|" + rowDivider;
 	for(int player = 0; player < players.size(); player++){
 	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
