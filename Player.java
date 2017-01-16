@@ -438,7 +438,21 @@ public boolean lettersInRack(String word1){
 	// setTotalScore(totalPointValue);
 	endTurn=true;
     }
-
+    public boolean inRackLetter(String word1,int index){
+	boolean ret=true;
+	String letter=word1.substring(index,index+1);
+	int in=0;
+	for(int j=0;j<7;j++){
+	    Tile lookingAt=rack.get(j);
+	    if(letter.toUpperCase().equals(lookingAt.getLetter())){
+		in=1;
+	    }
+	    if(j==6&&in==0){
+		ret=false;
+	    }
+	}
+	return ret;
+    }
     public boolean checkHor(Board board1,String word1,int x1,int y1){
 	int col=x1;
 	int row=y1;
@@ -448,6 +462,9 @@ public boolean lettersInRack(String word1){
 	for(int colCheck=0;colCheck<word1.length();colCheck++){
 	    Tile ofConcern=board1.getTileOfSquare(arrayrow,arraycol+colCheck);
 	    if(!(ofConcern.getLetter().equals(" "))&&(!word1.substring(colCheck,colCheck+1).toUpperCase().equals(ofConcern.getLetter()))){
+		ret=false;
+	    }
+	    else if((ofConcern.getLetter().equals(" ")&&!inRackLetter(word1,colCheck))){
 		ret=false;
 	    }
 	}
@@ -489,6 +506,9 @@ public boolean lettersInRack(String word1){
 	    if(!(ofConcern.getLetter().equals(" "))&&(!word1.substring(rowCheck,rowCheck+1).toUpperCase().equals(ofConcern.getLetter()))){
 		ret=false;
 				   
+	    }
+	    else if(ofConcern.getLetter().equals(" ")&&!inRackLetter(word1,rowCheck)){
+		ret=false;
 	    }
 	}
 	return ret;
