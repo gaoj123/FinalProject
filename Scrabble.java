@@ -100,7 +100,7 @@ public class Scrabble{
 	}
     }
 
-    public Scrabble(String nameP1, String nameP2){
+    /*public Scrabble(String nameP1, String nameP2){
 	initializeArrayList();
 	players = new ArrayList<Player>(0);
 	double P1Roll = Math.random();
@@ -118,7 +118,37 @@ public class Scrabble{
 	tileBag.refillRack(players.get(1));
 	overwriteScorekeeper(false);
 	totalRoundScores = new ArrayList<Integer>(0);
+    }*/
+
+    
+    ///*------------------------------------------------------------------------
+    public Scrabble(String playerNames){
+	initializeArrayList();
+	players = new ArrayList<Player>(0);
+	Random randgen = new Random();
+	int nextSpace = 0;
+	int i = 1;
+	while(playerNames.indexOf(" ") > -1){
+	    nextSpace = playerNames.indexOf(" ");
+	    players.add(randgen.nextInt(i), new Player(playerNames.substring(0, nextSpace)));
+	    playerNames = playerNames.substring(nextSpace);
+	    if(playerNames.length() == 1){
+		playerNames = "";
+	    }else{
+		playerNames = playerNames.substring(1);
+	    }
+	    i++;
+	}
+	gameBoard = new Board();
+	tileBag = new TileBag();
+	for(int index = 0; index < players.size(); index++){
+	    tileBag.refillRack(players.get(index));
+	}
+	overwriteScorekeeper(false);
+	totalRoundScores = new ArrayList<Integer>(0);
     }
+    //------------------------------------------------------------------------*/
+    
 
     private static String welcomeInstructions(){
 	return "To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 one-word player names as such: java Scrabble default <name of Player 1> <name of Player 2>";
@@ -211,6 +241,11 @@ public class Scrabble{
 		    tileBag.refillRack(players.get(turn));
 		    //I don't think it will need it, but may need to print this too
 		}
+
+
+		//should make a check for the format of placing a word too and a return like "invalid format of a command/invalid command format" if "else"
+		
+		
 		if(!players.get(turn).getEndTurn()){
 		    turn--;
 		}
@@ -242,10 +277,21 @@ public class Scrabble{
     
     
     public static void main(String[] args){
-	if(args.length == 3 && args[0].equals("default")){
+	/*if(args.length == 3 && args[0].equals("default")){
 	    Scrabble a = new Scrabble(args[1], args[2]);
 	    a.runGame();
 	}else if(args.length < 3){
+	    System.out.println(welcomeInstructions());
+	    }*/
+
+	if(args.length >= 3 && args[0].equals("default")){
+	    String stringOfPlayerNames = "";
+	    for(int i = 1; i < args.length; i++){
+		stringOfPlayerNames += args[i] + " ";
+	    }
+	    Scrabble a = new Scrabble(stringOfPlayerNames); 
+	    a.runGame();
+	}else{
 	    System.out.println(welcomeInstructions());
 	}
     }
