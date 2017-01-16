@@ -46,12 +46,55 @@ public class Scrabble{
 	return spacesNeeded;
     }
 
+    /*private int findPlace(Player lostPlayer, int index){
+	while(index >= 0 && lostPlayer.getRoundScore() <= players.get(index).getRoundScore()){
+	    if(lostPlayer.getRoundScore() == players.get(index).getRoundScore()){
+		if(lostPlayer.getTotalScore() < players.get(index).getTotalScore()){
+		    index--;
+		}else{
+		    return index;
+		}
+	    }else{
+		index--;
+	    }
+	}
+	return index;
+    }*/
+
+    private int findPlace(Player lostPlayer, int index){
+	while(index >= 0 && lostPlayer.getRoundScore() >= players.get(index).getRoundScore()){
+	    if(lostPlayer.getRoundScore() == players.get(index).getRoundScore()){
+		if(lostPlayer.getTotalScore() > players.get(index).getTotalScore()){
+		    index--;
+		}else{
+		    return index;
+		}
+	    }else{
+		index--;
+	    }
+	}
+	return index;
+    }
+
+    private void rankPlayers(){ //by insertion sort
+	for(int i = 1; i < players.size(); i++){
+	    Player lostPlayer = players.get(i);
+	    int index = i - 1;
+	    index = findPlace(lostPlayer, index);
+	    players.add(index + 1, players.remove(i));
+	}
+    }
+
     private void overwriteScorekeeper(boolean isLastOverwrite){
-	String lastColLabel = "Current Round";
+	String lastColLabel = "";
 	if(isLastOverwrite){
 	    lastColLabel = "After Deductions";
+	    rankPlayers();
+	    scorekeeper = "The game has ended.\nCongratulations on winning, " + players.get(0).getName() + "!"; //add possibility of tie for top
+	}else{
+	    lastColLabel = "Current Round";
+	    scorekeeper = "Scoreboard";
 	}
-	scorekeeper = "Scoreboard";
 	String rowDivider = "\n+";
 	int maxNameLength = 6;
 	for(int player = 0; player < players.size(); player++){
@@ -62,12 +105,16 @@ public class Scrabble{
 	for(int i = 0; i < maxNameLength; i++){
 	    rowDivider += "-";
 	}
-	rowDivider += "+-----+----------------+";
-	scorekeeper += rowDivider + "\n|Player" + extraSpacesNeeded("Player", maxNameLength) + "|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, 16) + "|" + rowDivider;
+	if(isLastOverwrite){
+	    rowDivider += "+-----+----------------+";
+	}else{
+	    rowDivider += "+-----+-------------+";
+	}
+	scorekeeper += rowDivider + "\n|Player" + extraSpacesNeeded("Player", maxNameLength) + "|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, lastColLabel.length()) + "|" + rowDivider;
 	for(int player = 0; player < players.size(); player++){
 	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
 		"|" + players.get(player).getTotalScore() + extraSpacesNeeded(Integer.toString(players.get(player).getTotalScore()), 5) +
-		"|" + players.get(player).getRoundScore() + extraSpacesNeeded(Integer.toString(players.get(player).getRoundScore()), 16) +
+		"|" + players.get(player).getRoundScore() + extraSpacesNeeded(Integer.toString(players.get(player).getRoundScore()), lastColLabel.length()) +
 		"|" + rowDivider;
 	}
     }
@@ -231,7 +278,6 @@ public class Scrabble{
     public void endGame(){
 	System.out.println(Cmd.CLEAR_SCREEN);
 	System.out.println(Cmd.go(1,1));
-	System.out.println("The Game Has Reached Its End"); //add an end-game msg
 	endGameScoring();
 	overwriteScorekeeper(true);
 	System.out.println(scorekeeper);
