@@ -49,5 +49,10 @@ Word entered is invalid (not found in dictionary).
 </p>
 <br>
 <h3>Features</h3>
-<p></p>
+<p>
+When two or more words are formed in the same play, each is scored. The points from intersections is displayed on the top of the board following "Points from intersections: "<br><br>
+BINGO! If you play seven tiles on a turn, it's a Bingo. You score a premium of 50 points after totaling your score for the turn.<br><br>
+Unplayed Letters: When the game ends, each player's score is reduced by the sum of his or her unplayed letters. In addition, if a player has used all of his or her letters, the sum of the other players' unplayed letters is added to that player's score.<br><br>
+The player with the highest final score wins the game.<br><br>
+</p>
 </html>
