@@ -69,12 +69,23 @@ public boolean lettersInRack(String word1){
 		    tileIndexInRack=start;
 		}
 	    }
+	    //Tile ofInterest=rack.get(tileIndexInRack);
 	    Tile ofInterest=rack.get(tileIndexInRack);
-	    if(ofInterest.getBlankOrNot()==true){
-		pointForTile=0;
+	    if(dir.equals("h")&&horOnBoardAndInRack(board1,p,word1,x1,y1)){
+		Tile ofConcern2=board1.getTileOfSquare(arrayrow,arraycol+p);
+		pointForTile=ofConcern2.getPoints();
+	    }
+	    else if(dir.equals("v")&&vertOnBoardAndInRack(board1,p,word1,x1,y1)){
+		Tile ofConcern2=board1.getTileOfSquare(arrayrow+p,arraycol);
+		pointForTile=ofConcern2.getPoints();
 	    }
 	    else{
-		pointForTile=ofInterest.getPoints();
+		if(ofInterest.getBlankOrNot()==true){
+		    pointForTile=0;
+		}
+		else{
+		    pointForTile=ofInterest.getPoints();
+		}
 	    }
 	    String effect=board1.getEffectOfSquare(arrayrow,arraycol);
 	    if(effect.equals("double letter")){
