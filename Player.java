@@ -973,7 +973,7 @@ public boolean lettersInRack(String word1){
 			    int numIntersections=0;
 			    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
 				if(arrayrow2+rowCheck2==7&&arraycol==7){
-				    startingCenter=true;				   
+				    startingCenter=true;		
 				}
 			    }
 			}
