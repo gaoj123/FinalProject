@@ -223,29 +223,6 @@ public class Scrabble{
 			    }
 			}
 		    }
-
-		    /*
-		    else if('1' <= currentInput.charAt(0) &&
-			    Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
-			if((currentInput.length() >= 3) &&
-			   ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
-			    (currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
-			    int indexx=0;
-			    indexx=Integer.parseInt(currentInput.substring(0,1));
-			    String letterToChangeInto=currentInput.substring(2,3);
-			    report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
-			}else{
-			    for(int i = 0; i < currentInput.length(); i++){
-				if('1' <= currentInput.charAt(i) &&
-				   Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
-				    System.out.println(currentInput.charAt(i));
-				    report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
-				}
-
-			    }
-			}
-		    }
-		    */
 		    
 		    else{ 
 			int nextSpace = currentInput.indexOf(" ");
