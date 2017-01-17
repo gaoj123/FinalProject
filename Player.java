@@ -1114,8 +1114,9 @@ public boolean lettersInRack(String word1){
 	return rack.size();
     }
     public String requestExchange(TileBag tilebag,int indexToExchange){
-	if('1' <= indexToExchange &&
-	   Character.forDigit(getRackSize(), 10) >= indexToExchange){
+	//return "" + indexToExchange;
+	if(0 <= indexToExchange &&
+	   getRackSize() - 1  >= indexToExchange){
 	    tilebag.exchange(this,indexToExchange);;
 	    roundScore=0;
 	    endTurn=true;
@@ -1127,8 +1128,8 @@ public boolean lettersInRack(String word1){
     }
     public String requestDifferentiate(int index,String letter){
 	endTurn = false;
-	if('1' <= index &&
-	   Character.forDigit(getRackSize(), 10) >= index){
+	if(0 <= index &&
+	   getRackSize() - 1 >= index){
 	    System.out.println("index: "+index);
 	    System.out.println("letter: "+letter);
 	    if(tileAtRackIndex(index).getLetter().equals("?")){
