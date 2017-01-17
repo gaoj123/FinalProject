@@ -95,6 +95,7 @@ public class Scrabble{
 	}else{
 	    rowDivider += "+-----+-------------+";
 	}
+	//add ranking numbers next to player names in addition to possibility for ties
 	scorekeeper += rowDivider + "\n|Player" + extraSpacesNeeded("Player", maxNameLength) + "|Total|" + lastColLabel + extraSpacesNeeded(lastColLabel, lastColLabel.length()) + "|" + rowDivider;
 	for(int player = 0; player < players.size(); player++){
 	    scorekeeper += "\n|" + players.get(player).getName() + extraSpacesNeeded(players.get(player).getName(), maxNameLength) +
@@ -199,12 +200,13 @@ public class Scrabble{
 			    }
 			}
 		    }
-		    if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
-			players.get(turn).pass();
-		    }
 
-		    else if('1' <= currentInput.charAt(0) &&
-			    Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(0)){ 
+		    
+		    if(currentInput.charAt(0) == '-'){
+			report = "Given invalid character. Please try again.";
+		    }else if(currentInput.length()==1&&currentInput.charAt(0) == '0'){
+			players.get(turn).pass();
+		    }else if(isStringInt(Character.toString(currentInput.charAt(0)))){
 			if((currentInput.length() >= 3) &&
 			   ((currentInput.charAt(2)>='a'&& currentInput.charAt(2)<='z') ||
 			    (currentInput.charAt(2)>='A'&& currentInput.charAt(2)<='Z'))){
@@ -214,15 +216,14 @@ public class Scrabble{
 			    report = players.get(turn).requestDifferentiate(indexx-1,letterToChangeInto);
 			}else{
 			    for(int i = 0; i < currentInput.length(); i++){
-				if('1' <= currentInput.charAt(i) &&
-				   Character.forDigit(players.get(turn).getRackSize(), 10) >= currentInput.charAt(i)){
+				if(isStringInt(Character.toString(currentInput.charAt(i)))){
 				    System.out.println(currentInput.charAt(i));
 				    report = players.get(turn).requestExchange(tileBag, Integer.parseInt(currentInput.substring(i, i + 1)));
 				}
-
 			    }
 			}
 		    }
+		    
 		    else{ 
 			int nextSpace = currentInput.indexOf(" ");
 			String word = currentInput.substring(0, nextSpace);

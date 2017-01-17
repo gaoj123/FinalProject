@@ -973,7 +973,7 @@ public boolean lettersInRack(String word1){
 			    int numIntersections=0;
 			    for(int rowCheck2=0;rowCheck2<word.length();rowCheck2++){		
 				if(arrayrow2+rowCheck2==7&&arraycol==7){
-				    startingCenter=true;				   
+				    startingCenter=true;		
 				}
 			    }
 			}
@@ -1114,33 +1114,45 @@ public boolean lettersInRack(String word1){
 	return rack.size();
     }
     public String requestExchange(TileBag tilebag,int indexToExchange){
-	tilebag.exchange(this,indexToExchange);;
-	roundScore=0;
-	endTurn=true;
-	return "";
+	//return "" + indexToExchange;
+	if(0 <= indexToExchange &&
+	   getRackSize() - 1  >= indexToExchange){
+	    tilebag.exchange(this,indexToExchange);;
+	    roundScore=0;
+	    endTurn=true;
+	    return "";
+	}else{
+	    endTurn = false;
+	    return "Given invalid position on rack. Please try again.";
+	}
     }
     public String requestDifferentiate(int index,String letter){
 	endTurn = false;
-	// System.out.println("index: "+index);
-	// System.out.println("letter: "+letter);
-	if(tileAtRackIndex(index).getLetter().equals("?")){
-	    int ascii=(int)letter.charAt(0);
-	    if((ascii>='a'&&ascii<='z')||(ascii>='A'&&ascii<='Z')){
-		Tile inRack=this.tileAtRackIndex(index);
-		this.removeFromRack(inRack);
-		Tile rackTile=new Tile("?");
-		rackTile.differentiate(letter);
-		this.addToRack(index,rackTile);
+	if(0 <= index &&
+	   getRackSize() - 1 >= index){
+	    //System.out.println("index: "+index);
+	    //System.out.println("letter: "+letter);
+	    if(tileAtRackIndex(index).getLetter().equals("?")){
+		int ascii=(int)letter.charAt(0);
+		if((ascii>='a'&&ascii<='z')||(ascii>='A'&&ascii<='Z')){
+		    Tile inRack=this.tileAtRackIndex(index);
+		    this.removeFromRack(inRack);
+		    Tile rackTile=new Tile("?");
+		    rackTile.differentiate(letter);
+		    this.addToRack(index,rackTile);
+		}
+		else{
+		    return ("Invalid letter. Letter must be a letter in the alphabet.");
+		}
 	    }
 	    else{
-		return ("Invalid letter. Letter must be a letter in the alphabet.");
+		return ("Tile at that index in your rack is not a blank tile");
 	    }
+	    //endTurn=false;
+	    return "";
+	}else{
+	    return "Given invalid position on rack. Please try again.";
 	}
-	else{
-	    return ("Tile at that index in your rack is not a blank tile");
-	}
-	//endTurn=false;
-	return "";
     }
     public void pass(){
 	roundScore=0;
