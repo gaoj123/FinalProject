@@ -1,19 +1,17 @@
 # FinalProject
 <html>
-<h1>Scrabble Terminal Game</h1>
+<h1>Scrabble Game in Terminal</h1>
 <img src="http://globaltoynews.typepad.com/.a/6a0133ec87bd6d970b0168e4f88ca9970c-800wi">
 <br>
 <h5>Jenny Gao and Winnie Chen (Incandescent Mind)</h5>
-<h5>Period 10</h5><br><br>
+<h5>Period 10</h5><br>
 <h3>Overview</h3>
-<br>
 <p>	This is a terminal version of Scrabble with a 15x15 grid of squares representing the board, each of which accommodates a single letter tile. The goal of Scrabble is to score as many points as possible by placing letter tiles to create words onto the game board. When all letters have been drawn and one player uses his or her last letter, or when all possible plays have been made, the game ends.
 Each player has 7 tiles; whenever a tile is used, a new tile is generated randomly (based on probabilities listed below, in Critical Features section).  Players score points by forming words with tiles. Each tile has one letter and letters have different point values. Players can choose where to place tiles by entering the starting point’s (square’s) x and y coordinates, as well as the direction, so the format would be [&lt;word&gt; &lt;x-cor/col&gt; &lt;y-xor/row&gt; &lt;direction&gt;].  The direction would be “h” or “v” for horizontal or vertical.  Premium letter squares can double or triple (depending on the type of premium letter square) the worth of the tile placed at its location. A word check will make sure the word a player spells out is valid.  </p>
 <h3>Instructions</h3>
-<br>
 <p>To run a Scrabble game with the default settings, type 'default' as an argument after the command. After that, include 2 or more one-word player names as such: java Scrabble default &lt;name of Player 1&gt; &lt;name of Player 2&gt; [&lt;name of Player 3&gt;] [&lt;name of Player 4&gt;] [&lt;name of Player 5&gt;]<br><br>To run a Scrabble game with custom settings for how many rounds the game should last, type: custom-rounds &lt;number of rounds&gt; &lt;name of Player 1&gt; &lt;name of Player 2&gt; [&lt;name of Player 3&gt;] [&lt;name of Player 4&gt;] ...etc.</p>
-<br><br>
-<h5>Commands while game is running: </h5><br>
+<br>
+<h5>Commands while game is running: </h5>
 <p>To attempt to place a word, enter &lt;word&gt; &lt;x-cor&gt; &lt;y-cor&gt; &lt;direction&gt;
 <br>Single digit x-cor and y-cor values should be entered as a single digit
 <br>Direction can be indicated by typing 'h' for horizontal and 'v' for vertical
@@ -24,8 +22,7 @@ To turn a blank tile into any letter of the alphabet, enter &lt;position of the 
 <br><br>
 To pass, enter 0
 </p>
-<br>
-<h5>Try Again When ... </h5>
+<h5>Allowed to Try Again When ... </h5>
 <p>
 Position is off the board (x-cor or y-cor is not between 0 and 14).
 <br><br>
@@ -44,13 +41,12 @@ Tiles are in rack but will be laid on a square that is already occupied (with a 
 Also, if a blank tile was just turned into a tile containing any letter of user's choice, the user can continue to place a word (still that user's turn).
 </p>
 <br>
-<h5>Move On To Next Player If/When ... </h5>
+<h5>Moves On To Next Player If/When ... </h5>
 <p>
 Word is placed on the board.
 <br><br>
 Word entered is invalid (not found in dictionary).
 </p>
-<br>
 <h3>Features</h3>
 <p>
 The score for each turn is the sum of the letter values in each word(s) formed or modified on that turn, plus the additional points obtained from placing letters on Premium Squares (different colored squares in terminal).<br><br>
@@ -65,5 +61,9 @@ BINGO! If you play seven tiles on a turn, it's a Bingo. You score a premium of 5
 Unplayed Letters: When the game ends, each player's score is reduced by the sum of his or her unplayed letters. In addition, if a player has used all of his or her letters, the sum of the other players' unplayed letters is added to that player's score. The resulting score is used for determining the winner and rankings, with the total score before deductions used for tie-breaking.<br><br>
 The player with the highest final score wins the game.<br><br>
 Note: At the end of each round (after the last player takes his/her turn), the Current Round Score column resets to 0.
+</p>
+<br>
+<h3>Known Errors</h3>
+<p>Tiles placed on the edges of the board (when x-cor is 0 or 14, or when y-cor is 0 or 14) results in an error because the code to verify that the word to be placed intersects a word already on the board checks the squares/spaces around it.
 </p>
 </html>
