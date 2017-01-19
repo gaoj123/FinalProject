@@ -64,6 +64,6 @@ Note: At the end of each round (after the last player takes his/her turn), the C
 </p>
 <br>
 <h3>Known Errors</h3>
-<p>Tiles placed on the edges of the board (when x-cor is 0 or 14, or when y-cor is 0 or 14) result in an error because the code to verify that the word to be placed intersects a word already on the board checks the squares/spaces around it.
+<p>Tiles placed on the edges of the board (when x-cor is 0 or 14, or when y-cor is 0 or 14) result in an error because the code to verify that the word to be placed intersects a word already on the board checks the squares/spaces around it, so when coordinate values were 0 or 14, squares off the board were checked to see if they were occupied. This can be easily fixed by placing a restriction but the error was discovered too late.
 </p>
 </html>
